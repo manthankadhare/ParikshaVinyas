@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Course — {{ course.code }}{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Edit Degree Course{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card card-pv shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2 fw-semibold text-dark">
+                    <i data-lucide="edit-3" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <span>Edit Course: {{ course.code }}</span>
+                </span>
+                <a href="{{ url_for('academic.courses') }}" class="btn btn-sm btn-outline-secondary">Back to Courses</a>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Course Code <span class="text-danger">*</span></label>
+                        <input type="text" name="code" class="form-control" value="{{ course.code }}" required>
+                        <small class="text-muted">Unique acronym identifier (e.g., CS, IT, ME)</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Course Full Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" value="{{ course.name }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Department <span class="text-danger">*</span></label>
+                        <input type="text" name="department" class="form-control" value="{{ course.department }}" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-secondary">Total Semesters <span class="text-danger">*</span></label>
+                        <input type="number" name="total_semesters" class="form-control" value="{{ course.total_semesters }}" min="1" max="10" required>
+                    </div>
+
+                    <div class="pt-3 border-top d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('academic.courses') }}" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-pv-primary px-4">Update Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

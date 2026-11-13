@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Automatic Allocation Wizard{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Allocation Wizard{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Process Header -->
+        <div class="text-center mb-4">
+            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-1 fw-semibold mb-2">
+                <i data-lucide="sparkles" style="width: 15px; height: 15px; vertical-align: -2px;"></i>
+                Algorithmic Seat Engine
+            </span>
+            <h4 class="fw-bold mb-1 text-dark">Automated Seat Allocation Wizard</h4>
+            <p class="text-muted small mb-0">Configure mathematical distribution strategy, deterministic seeds, and target hall selection.</p>
+        </div>
+
+        <div class="card card-pv shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="cpu" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <strong>Allocation Parameters & Hall Scope</strong>
+                </span>
+                <a href="{{ url_for('allocation.index') }}" class="btn btn-sm btn-outline-secondary">Back to Hub</a>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-secondary">Target Examination <span class="text-danger">*</span></label>
+                        {{ form.examination_id(class="form-select" + (" is-invalid" if form.examination_id.errors else "")) }}
+                        {% for err in form.examination_id.errors %}
+                            <div class="invalid-feedback">{{ err }}</div>
+                        {% endfor %}
+                        <small class="text-muted">Select the scheduled examination to generate seat arrangements for.</small>
+                    </div>
+
+                    <!-- Allocation Strategy Selector -->
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-secondary">Allocation Strategy <span class="text-danger">*</span></label>
+                        {{ form.strategy(class="form-select", id="strategySelect") }}
+                        <div class="card bg-light border p-3 mt-2">
+                            <ul class="small text-muted ps-3 mb-0">
+                                <li class="mb-1"><strong>Sequential:</strong> Assigns students in order of their enrollment numbers across hall rows and columns.</li>
+                                <li class="mb-1"><strong>Mixed Course / Division:</strong> Interleaves students from different divisions/branches across adjacent seats to minimize peer proximity.</li>
+                                <li><strong>Random:</strong> Shuffles students using a deterministic pseudo-random seed (ideal for STQA reproducible testing).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Random Seed Input (Visible for Random strategy) -->
+                    <div class="mb-4" id="seedContainer">
+                        <label class="form-label small fw-semibold text-secondary">Reproducible Random Seed (For STQA Verification)</label>
+                        {{ form.random_seed(class="form-control", type="number") }}
+                        <small class="text-muted">Same seed ensures identical seat arrangements for repeatable STQA automation tests.</small>
+                    </div>
+
+                    <!-- Target Halls Multi-select -->
+                    <div class="mb-4">
+                        <label class="form-label small fw-semibold text-secondary">Target Examination Halls (Leave empty to use all active halls)</label>
+                        {{ form.hall_ids(class="form-select", size="5") }}
+                        <small class="text-muted">Hold Ctrl / Cmd to select specific halls, or leave unselected to automatically utilize all active halls.</small>
+                    </div>
+
+                    <!-- Force Reallocate Checkbox -->
+                    <div class="mb-4 form-check p-3 bg-light rounded-3 border">
+                        {{ form.force_reallocate(class="form-check-input") }}
+                        <label class="form-check-label small fw-semibold text-dark" for="{{ form.force_reallocate.id }}">
+                            Force Regeneration / Overwrite Existing Allocations
+                        </label>
+                        <div class="small text-muted mt-1">If this examination already has seat records, check this to clear and regenerate atomically.</div>
+                    </div>
+
+                    {% if error_summary %}
+                    <div class="alert alert-danger p-3 mb-4">
+                        <h6 class="fw-bold mb-1 d-flex align-items-center gap-1.5">
+                            <i data-lucide="alert-circle" style="width: 18px; height: 18px;"></i>
+                            <span>Capacity Shortage Detected (Transaction Rolled Back)</span>
+                        </h6>
+                        <ul class="mb-0 small ps-3">
+                            <li>Required Seats: <strong>{{ error_summary.required_seats }}</strong></li>
+                            <li>Available Seats: <strong>{{ error_summary.available_seats }}</strong></li>
+                            <li>Shortage: <strong class="text-danger">{{ error_summary.shortage }} seats</strong></li>
+                            <li>Halls Evaluated: {{ error_summary.halls_considered }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <div class="pt-3 border-top d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('allocation.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-pv-accent px-4 py-2 fw-semibold shadow-sm d-flex align-items-center gap-1.5">
+                            <i data-lucide="play" style="width: 16px; height: 16px;"></i>
+                            <span>Execute Seat Allocation</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const strat = document.getElementById('strategySelect');
+    const seedBox = document.getElementById('seedContainer');
+    function updateSeed() {
+        if (strat && seedBox) {
+            seedBox.style.display = (strat.value === 'Random') ? 'block' : 'none';
+        }
+    }
+    if (strat) {
+        strat.addEventListener('change', updateSeed);
+        updateSeed();
+    }
+});
+</script>
+{% endblock %}

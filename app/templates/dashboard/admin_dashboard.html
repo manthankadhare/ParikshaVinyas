@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}Operations Command Center{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Examination Control{% endblock %}
+
+{% block content %}
+<!-- Quick Actions & Page Header -->
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <h4 class="fw-bold mb-0 text-dark">Examination Operations Overview</h4>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2.5 py-1">Real-Time ERP</span>
+        </div>
+        <p class="text-muted mb-0 small">Automated hall capacity monitoring, student seat allocation, and institutional audit trail.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('allocation.wizard') }}" class="btn btn-pv-accent d-flex align-items-center gap-2 shadow-sm">
+            <i data-lucide="sparkles" style="width: 17px; height: 17px;"></i>
+            <span>Run Auto Allocation</span>
+        </a>
+        <a href="{{ url_for('exam.add') }}" class="btn btn-pv-primary d-flex align-items-center gap-2 shadow-sm">
+            <i data-lucide="calendar-plus" style="width: 17px; height: 17px;"></i>
+            <span>Schedule Exam</span>
+        </a>
+        <a href="{{ url_for('reports.index') }}" class="btn btn-outline-secondary d-flex align-items-center gap-2 bg-white">
+            <i data-lucide="file-down" style="width: 17px; height: 17px;"></i>
+            <span>Reports & Exports</span>
+        </a>
+    </div>
+</div>
+
+<!-- Stat Cards Grid -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Registered Candidates</div>
+                <div class="stat-val">{{ total_students }}</div>
+                <div class="d-flex align-items-center gap-1 text-success fw-semibold small mt-1">
+                    <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
+                    <span>{{ active_students }} Active in Roster</span>
+                </div>
+            </div>
+            <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Examination Halls</div>
+                <div class="stat-val">{{ total_halls }}</div>
+                <div class="text-muted small mt-1">
+                    <strong>{{ total_usable_capacity }}</strong> Net Usable Desks
+                </div>
+            </div>
+            <div class="stat-icon bg-info bg-opacity-10 text-info">
+                <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Allocated Seats</div>
+                <div class="stat-val text-primary">{{ total_allocations }}</div>
+                <div class="d-flex align-items-center gap-1 text-warning fw-semibold small mt-1">
+                    <i data-lucide="trending-up" style="width: 14px; height: 14px;"></i>
+                    <span>{{ completion_percentage }}% Completion</span>
+                </div>
+            </div>
+            <div class="stat-icon bg-success bg-opacity-10 text-success">
+                <i data-lucide="check-check" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Damaged / Blocked</div>
+                <div class="stat-val text-danger">{{ total_blocked_seats }}</div>
+                <div class="text-muted small mt-1">
+                    Maintenance Desks
+                </div>
+            </div>
+            <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+                <i data-lucide="ban" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="bar-chart-3" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <strong>Hall-Wise Capacity & Utilization</strong>
+                </span>
+                <span class="badge bg-light text-muted border">Live Hall Inventory</span>
+            </div>
+            <div class="card-body">
+                <div style="height: 260px; position: relative;">
+                    <canvas id="hallCapacityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="pie-chart" class="text-warning" style="width: 19px; height: 19px;"></i>
+                    <strong>Candidate Allocation Ratio</strong>
+                </span>
+                <span class="badge bg-primary bg-opacity-10 text-primary">All Slots</span>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                <div style="width: 210px; height: 210px; position: relative;">
+                    <canvas id="allocationStatusChart"></canvas>
+                </div>
+                <div class="mt-3 text-center small text-muted">
+                    Total Registered Slots: <strong class="text-dark">{{ total_allocations + alloc_status_values[1] }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tables Section: Upcoming Examinations & Recent Activity -->
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="calendar" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <strong>Upcoming Examinations</strong>
+                </span>
+                <a href="{{ url_for('exam.index') }}" class="btn btn-sm btn-link text-decoration-none fw-semibold">View All Schedules &rarr;</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Exam Code</th>
+                            <th>Subject & Course</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if upcoming_exams %}
+                            {% for ex in upcoming_exams %}
+                            <tr>
+                                <td>
+                                    <span class="badge bg-light text-dark border font-monospace">{{ ex.exam_code }}</span>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold text-dark">{{ ex.subject.name }}</div>
+                                    <small class="text-muted">{{ ex.course.code }} &bull; Sem {{ ex.semester }}</small>
+                                </td>
+                                <td>
+                                    <div class="text-dark">{{ ex.exam_date.strftime('%d-%b-%Y') }}</div>
+                                    <small class="text-muted">{{ ex.start_time.strftime('%I:%M %p') }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge {% if ex.status == 'Allocated' %}bg-success{% elif ex.status == 'Scheduled' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                        {{ ex.status }}
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ url_for('allocation.visual_grid', exam_id=ex.id) }}" class="btn btn-sm btn-outline-primary" title="View Seating Grid">
+                                        <i data-lucide="grid" style="width: 14px; height: 14px;"></i>
+                                        <span class="d-none d-md-inline ms-1">Grid</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">No upcoming examinations scheduled.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="history" class="text-secondary" style="width: 19px; height: 19px;"></i>
+                    <strong>System Activity Audit</strong>
+                </span>
+                <a href="{{ url_for('admin.activity_logs') }}" class="btn btn-sm btn-link text-decoration-none fw-semibold">Audit Logs &rarr;</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% if recent_activities %}
+                        {% for act in recent_activities %}
+                        <div class="list-group-item px-3 py-2.5 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="badge bg-light text-dark fw-bold border">{{ act.module }}</span>
+                                <small class="text-muted" style="font-size: 0.72rem;">{{ act.timestamp.strftime('%H:%M:%S') }}</small>
+                            </div>
+                            <div class="fw-semibold small text-dark">{{ act.action }}</div>
+                            <div class="text-muted small text-truncate" style="max-width: 320px;">{{ act.details }}</div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 text-muted small">No recent activity logs.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Hall Capacity Chart
+    const ctxHall = document.getElementById('hallCapacityChart');
+    if (ctxHall) {
+        new Chart(ctxHall, {
+            type: 'bar',
+            data: {
+                labels: {{ hall_labels | tojson }},
+                datasets: [
+                    {
+                        label: 'Gross Capacity',
+                        data: {{ hall_capacities | tojson }},
+                        backgroundColor: '#cbd5e1',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Net Usable',
+                        data: {{ hall_usable | tojson }},
+                        backgroundColor: '#1d4ed8',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Allocated Desks',
+                        data: {{ hall_occupied | tojson }},
+                        backgroundColor: '#059669',
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15,
+                            font: { family: "'Inter', sans-serif", size: 12 }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f5f9' }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Allocation Status Doughnut Chart
+    const ctxAlloc = document.getElementById('allocationStatusChart');
+    if (ctxAlloc) {
+        new Chart(ctxAlloc, {
+            type: 'doughnut',
+            data: {
+                labels: {{ alloc_status_labels | tojson }},
+                datasets: [{
+                    data: {{ alloc_status_values | tojson }},
+                    backgroundColor: ['#1d4ed8', '#e2e8f0'],
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 12,
+                            font: { family: "'Inter', sans-serif", size: 12 }
+                        }
+                    }
+                },
+                cutout: '72%'
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

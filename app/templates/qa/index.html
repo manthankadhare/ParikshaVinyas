@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}STQA Quality Engineering Hub{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — STQA Quality Hub{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <h4 class="fw-bold mb-0 text-dark">STQA Quality Assurance Dashboard</h4>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-0.5">Verification 100%</span>
+        </div>
+        <p class="text-muted small mb-0">Academic test case execution tracking, boundary value analysis, AI test generation, and defect lifecycle metrics.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('qa.ai_workspace') }}" class="btn btn-pv-accent d-flex align-items-center gap-1.5 shadow-sm">
+            <i data-lucide="brain" style="width: 15px; height: 15px;"></i>
+            <span>AI Test Generator</span>
+        </a>
+        <a href="{{ url_for('qa.add_test_case') }}" class="btn btn-pv-primary d-flex align-items-center gap-1.5 shadow-sm">
+            <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
+            <span>Add Test Case</span>
+        </a>
+        <a href="{{ url_for('qa.add_defect') }}" class="btn btn-outline-danger d-flex align-items-center gap-1.5 bg-white shadow-sm">
+            <i data-lucide="bug" style="width: 15px; height: 15px;"></i>
+            <span>Log Defect</span>
+        </a>
+    </div>
+</div>
+
+<!-- Metrics Cards Grid -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Total Test Cases</div>
+                <div class="stat-val">{{ total_cases }}</div>
+                <div class="text-muted small mt-1">Formal STQA Matrix</div>
+            </div>
+            <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                <i data-lucide="list-checks" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Passed Tests</div>
+                <div class="stat-val text-success">{{ passed_cases }}</div>
+                <div class="d-flex align-items-center gap-1 text-success fw-semibold small mt-1">
+                    <i data-lucide="check-circle-2" style="width: 14px; height: 14px;"></i>
+                    <span>{{ pass_rate }}% Pass Rate</span>
+                </div>
+            </div>
+            <div class="stat-icon bg-success bg-opacity-10 text-success">
+                <i data-lucide="check-circle" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Failed Tests</div>
+                <div class="stat-val text-danger">{{ failed_cases }}</div>
+                <div class="text-muted small mt-1">{{ blocked_cases }} Blocked Tests</div>
+            </div>
+            <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+                <i data-lucide="x-circle" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Active Defects</div>
+                <div class="stat-val text-danger">{{ open_defects }}</div>
+                <div class="text-muted small mt-1">{{ critical_defects }} Critical Severity</div>
+            </div>
+            <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                <i data-lucide="bug" style="width: 24px; height: 24px;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STQA Methodology Highlights Banner -->
+<div class="card card-pv mb-4 bg-light border">
+    <div class="card-body p-3.5 d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-1.5">
+            <strong class="text-dark small me-1">STQA Techniques Applied:</strong>
+            <span class="badge bg-white text-dark border shadow-xs">Boundary Value Analysis (BVA)</span>
+            <span class="badge bg-white text-dark border shadow-xs">Equivalence Partitioning (EP)</span>
+            <span class="badge bg-white text-dark border shadow-xs">Decision Table Testing</span>
+            <span class="badge bg-white text-dark border shadow-xs">State Transition Testing</span>
+            <span class="badge bg-white text-dark border shadow-xs">Atomic Rollback Verification</span>
+        </div>
+        <a href="{{ url_for('qa.test_cases') }}" class="btn btn-sm btn-outline-primary bg-white shadow-sm fw-semibold">
+            <span>Browse Full Matrix &rarr;</span>
+        </a>
+    </div>
+</div>
+
+<!-- Test Cases Table & Defects List -->
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="check-square" class="text-primary" style="width: 18px; height: 18px;"></i>
+                    <strong>Recent STQA Test Cases</strong>
+                </span>
+                <a href="{{ url_for('qa.test_cases') }}" class="btn btn-sm btn-link text-decoration-none fw-semibold">View All &rarr;</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Module & Scenario</th>
+                            <th>Technique</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if recent_cases %}
+                            {% for tc in recent_cases %}
+                            <tr>
+                                <td><code class="font-monospace text-primary fw-bold">{{ tc.case_code }}</code></td>
+                                <td>
+                                    <div class="fw-semibold text-dark">{{ tc.scenario }}</div>
+                                    <small class="text-muted">{{ tc.module }} &bull; {{ tc.test_type }}</small>
+                                </td>
+                                <td><span class="badge bg-light text-dark border">{{ tc.test_technique }}</span></td>
+                                <td>
+                                    <span class="badge-status {% if tc.status == 'Pass' %}badge-pass{% elif tc.status == 'Fail' %}badge-fail{% elif tc.status == 'Blocked' %}badge-blocked{% else %}badge-not-exec{% endif %}">
+                                        {{ tc.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">No test cases registered yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="bug" class="text-danger" style="width: 18px; height: 18px;"></i>
+                    <strong>Tracked Defect Reports</strong>
+                </span>
+                <a href="{{ url_for('qa.defects') }}" class="btn btn-sm btn-link text-decoration-none fw-semibold">View All &rarr;</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% if recent_defects %}
+                        {% for bug in recent_defects %}
+                        <div class="list-group-item px-3 py-2.5 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle font-monospace">{{ bug.bug_code }}</span>
+                                <span class="badge {% if bug.severity == 'Critical' %}bg-danger{% elif bug.severity == 'High' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                                    {{ bug.severity }}
+                                </span>
+                            </div>
+                            <div class="fw-semibold small text-dark">{{ bug.title }}</div>
+                            <div class="d-flex justify-content-between text-muted small mt-1">
+                                <span>Status: <strong class="text-dark">{{ bug.status }}</strong></span>
+                                <span>Priority: <strong>{{ bug.priority }}</strong></span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 text-muted small">No defects logged in system.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Examination Reports & Documentation{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Official Reports{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+        <h4 class="fw-bold mb-0 text-dark">Examination Reports & Documentation Centre</h4>
+        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-0.5">ReportLab 4.2 Engine</span>
+    </div>
+    <p class="text-muted small mb-0">Generate formal university-branded PDF seating charts, door-posting attendance sheets, candidate admit cards, and CSV archives.</p>
+</div>
+
+<div class="row g-4">
+    <!-- Report 1: Examination Master Seating Chart -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-primary bg-opacity-10 text-primary mb-3">
+                        <i data-lucide="file-spreadsheet" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Exam Seating Chart</h5>
+                    <p class="text-muted small">Comprehensive PDF report of all students, seat numbers, and halls allocated for a selected examination.</p>
+                </div>
+                <div class="mt-3">
+                    <form method="GET" action="" onsubmit="event.preventDefault(); const id = this.exam_id.value; if(id) window.location.href='/admin/reports/exam/' + id + '/pdf';">
+                        <select name="exam_id" class="form-select form-select-sm mb-2.5" required>
+                            <option value="">-- Choose Examination --</option>
+                            {% for e in exams %}
+                            <option value="{{ e.id }}">{{ e.exam_code }}: {{ e.exam_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-pv-primary w-100 d-flex align-items-center justify-content-center gap-1.5 shadow-sm">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                            <span>Generate Official PDF</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 2: Hall-Wise Seating Arrangement -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-success bg-opacity-10 text-success mb-3">
+                        <i data-lucide="building-2" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Hall Attendance Sheet</h5>
+                    <p class="text-muted small">Door-posting and invigilator attendance sheet with student signature columns for a specific hall.</p>
+                </div>
+                <div class="mt-3">
+                    <form method="GET" action="" onsubmit="event.preventDefault(); const hid = this.hall_id.value; const eid = this.exam_id.value; if(hid && eid) window.location.href='/admin/reports/hall/' + hid + '/exam/' + eid + '/pdf';">
+                        <div class="row g-1.5 mb-2.5">
+                            <div class="col-6">
+                                <select name="hall_id" class="form-select form-select-sm" required>
+                                    <option value="">-- Hall --</option>
+                                    {% for h in halls %}
+                                    <option value="{{ h.id }}">{{ h.hall_code }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select name="exam_id" class="form-select form-select-sm" required>
+                                    <option value="">-- Exam --</option>
+                                    {% for e in exams %}
+                                    <option value="{{ e.id }}">{{ e.exam_code }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-outline-success w-100 d-flex align-items-center justify-content-center gap-1.5 bg-white shadow-sm">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                            <span>Download Hall PDF</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 3: Student Seating Slip / Admit Card -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-info bg-opacity-10 text-info mb-3">
+                        <i data-lucide="ticket" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Candidate Admit Card</h5>
+                    <p class="text-muted small">Official candidate examination hall pass with instructions, timetable, hall codes, and assigned desk numbers.</p>
+                </div>
+                <div class="mt-3">
+                    <form method="GET" action="" onsubmit="event.preventDefault(); const sid = this.student_id.value; if(sid) window.location.href='/admin/reports/student/' + sid + '/pdf';">
+                        <select name="student_id" class="form-select form-select-sm mb-2.5" required>
+                            <option value="">-- Select Candidate --</option>
+                            {% for s in students %}
+                            <option value="{{ s.id }}">{{ s.enrollment_no }} - {{ s.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-1.5 bg-white shadow-sm">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                            <span>Download Admit Pass</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 4: Hall Utilization & Capacity Audit -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-warning bg-opacity-10 text-warning mb-3">
+                        <i data-lucide="pie-chart" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Capacity Audit Report</h5>
+                    <p class="text-muted small">Formal inventory audit detailing dimensions, gross capacities, damaged/blocked desks, and net usable seats.</p>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('reports.hall_utilization_pdf') }}" class="btn btn-sm btn-outline-dark w-100 d-flex align-items-center justify-content-center gap-1.5 bg-white shadow-sm">
+                        <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                        <span>Download Audit PDF</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 5: Unallocated Students Audit -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-danger bg-opacity-10 text-danger mb-3">
+                        <i data-lucide="user-x" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Unallocated Candidates</h5>
+                    <p class="text-muted small">STQA reconciliation report highlighting eligible candidates missing seat allocations due to capacity deficit.</p>
+                </div>
+                <div class="mt-3">
+                    <a href="{{ url_for('reports.unallocated') }}" class="btn btn-sm btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-1.5 bg-white shadow-sm">
+                        <i data-lucide="eye" style="width: 15px; height: 15px;"></i>
+                        <span>Reconciliation Audit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report 6: CSV Data Export -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-inline-flex p-3 rounded-3 bg-secondary bg-opacity-10 text-secondary mb-3">
+                        <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark">Raw CSV Data Exports</h5>
+                    <p class="text-muted small">Export raw tabular data for student directory or full examination seat allocation records.</p>
+                </div>
+                <div class="mt-3 d-flex gap-2">
+                    <a href="{{ url_for('student.export_csv') }}" class="btn btn-sm btn-outline-secondary flex-grow-1 bg-white shadow-sm">
+                        Students CSV
+                    </a>
+                    {% if exams %}
+                    <a href="{{ url_for('reports.exam_csv', exam_id=exams[0].id) }}" class="btn btn-sm btn-outline-secondary flex-grow-1 bg-white shadow-sm">
+                        Allocations CSV
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

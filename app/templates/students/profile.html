@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Candidate Profile: {{ student.full_name }}{% endblock %}
+{% block page_title %}Candidate Examination Record{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card card-pv text-center p-4">
+            <div class="user-avatar mx-auto mb-3" style="width: 72px; height: 72px; font-size: 1.8rem; background: var(--pv-secondary);">
+                {{ student.full_name[:1].upper() }}
+            </div>
+            <h5 class="fw-bold mb-1">{{ student.full_name }}</h5>
+            <div class="text-primary fw-semibold mb-2">{{ student.enrollment_no }}</div>
+            <span class="badge {% if student.status == 'Active' %}bg-success{% else %}bg-secondary{% endif %} mx-auto mb-3">
+                {{ student.status }} Candidate
+            </span>
+
+            <div class="list-group list-group-flush text-start small border-top pt-3">
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Course:</span>
+                    <strong>{{ student.course.name }}</strong>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Branch:</span>
+                    <span>{{ student.branch }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Semester / Div:</span>
+                    <span>Sem {{ student.semester }} - Div {{ student.division }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Email:</span>
+                    <span>{{ student.email }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Mobile:</span>
+                    <span>{{ student.mobile }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Academic Year:</span>
+                    <span>{{ student.academic_year }}</span>
+                </div>
+            </div>
+
+            <div class="mt-4 d-grid gap-2">
+                <a href="{{ url_for('reports.student_slip_pdf', student_id=student.id) }}" class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center gap-1">
+                    <i data-lucide="file-text" style="width: 16px;"></i> Download Seating Slip PDF
+                </a>
+                <a href="{{ url_for('student.edit', student_id=student.id) }}" class="btn btn-sm btn-outline-secondary">
+                    Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card card-pv">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="check-square" class="text-primary" style="width: 20px;"></i>
+                    Allocated Examination Seats
+                </span>
+                <span class="badge bg-light text-dark border">{{ allocations|length }} Total Allotments</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Exam Code</th>
+                            <th>Subject</th>
+                            <th>Date & Time</th>
+                            <th>Hall Code</th>
+                            <th>Seat Number</th>
+                            <th>Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if allocations %}
+                            {% for a in allocations %}
+                            <tr>
+                                <td><strong>{{ a.examination.exam_code }}</strong></td>
+                                <td>{{ a.examination.subject.name }}</td>
+                                <td>
+                                    <div>{{ a.examination.exam_date.strftime('%d-%b-%Y') }}</div>
+                                    <small class="text-muted">{{ a.examination.start_time.strftime('%I:%M %p') }}</small>
+                                </td>
+                                <td><span class="badge bg-light text-dark border">{{ a.hall.hall_code }}</span></td>
+                                <td><span class="badge bg-primary fs-6">{{ a.seat_identifier }}</span></td>
+                                <td class="small text-muted">{{ a.strategy_used }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    No examination seats currently allocated for this candidate.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

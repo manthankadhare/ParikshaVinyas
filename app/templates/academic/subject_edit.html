@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Subject — {{ subject.code }}{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Edit Subject{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card card-pv shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2 fw-semibold text-dark">
+                    <i data-lucide="edit-3" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <span>Edit Curriculum Subject: {{ subject.code }}</span>
+                </span>
+                <a href="{{ url_for('academic.subjects') }}" class="btn btn-sm btn-outline-secondary">Back to Subjects</a>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Subject Code <span class="text-danger">*</span></label>
+                            <input type="text" name="code" class="form-control" value="{{ subject.code }}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Subject Title <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" value="{{ subject.name }}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Degree Course <span class="text-danger">*</span></label>
+                            <select name="course_id" class="form-select" required>
+                                {% for c in courses %}
+                                <option value="{{ c.id }}" {% if c.id == subject.course_id %}selected{% endif %}>{{ c.code }} - {{ c.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small fw-semibold text-secondary">Semester <span class="text-danger">*</span></label>
+                            <input type="number" name="semester" class="form-control" value="{{ subject.semester }}" min="1" max="10" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small fw-semibold text-secondary">Credits <span class="text-danger">*</span></label>
+                            <input type="number" name="credits" class="form-control" value="{{ subject.credits }}" min="1" max="6" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Academic Year</label>
+                            <input type="text" name="academic_year" class="form-control" value="{{ subject.academic_year }}">
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('academic.subjects') }}" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-pv-primary px-4">Update Subject</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

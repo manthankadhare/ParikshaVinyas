@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Candidate Directory{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Student Candidates{% endblock %}
+
+{% block content %}
+<div class="card card-pv">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-0.5">
+                <h5 class="mb-0 fw-bold text-dark">Student Candidate Directory</h5>
+                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-0.5">{{ students.total }} Candidates</span>
+            </div>
+            <small class="text-muted">Master candidate roster, academic departments, and enrollment status</small>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('student.import_csv') }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1.5 bg-white shadow-sm">
+                <i data-lucide="upload" style="width: 15px; height: 15px;"></i>
+                <span>Import CSV</span>
+            </a>
+            <a href="{{ url_for('student.export_csv') }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1.5 bg-white shadow-sm">
+                <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                <span>Export CSV</span>
+            </a>
+            <a href="{{ url_for('student.add') }}" class="btn btn-sm btn-pv-primary d-flex align-items-center gap-1.5 shadow-sm">
+                <i data-lucide="user-plus" style="width: 15px; height: 15px;"></i>
+                <span>Register Student</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters & Search Bar -->
+    <div class="card-body bg-light border-bottom p-3.5">
+        <form method="GET" class="row g-2 align-items-center">
+            <div class="col-md-4">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text bg-white"><i data-lucide="search" style="width: 15px; height: 15px;"></i></span>
+                    <input type="text" name="q" class="form-control" placeholder="Search by Enrollment No, Name, or Email" value="{{ search_query }}">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select name="course_id" class="form-select form-select-sm">
+                    <option value="">-- All Departments & Courses --</option>
+                    {% for c in courses %}
+                    <option value="{{ c.id }}" {% if course_filter == c.id %}selected{% endif %}>{{ c.code }} - {{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="semester" class="form-select form-select-sm">
+                    <option value="">-- Semester --</option>
+                    {% for s in range(1, 9) %}
+                    <option value="{{ s }}" {% if semester_filter == s %}selected{% endif %}>Semester {{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-sm btn-pv-primary flex-grow-1">Apply Filters</button>
+                {% if search_query or course_filter or semester_filter %}
+                <a href="{{ url_for('student.index') }}" class="btn btn-sm btn-outline-secondary">Reset</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Full Name & Email</th>
+                    <th>Course & Branch</th>
+                    <th>Semester / Div</th>
+                    <th>Mobile</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if students.items %}
+                    {% for s in students.items %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('student.view_profile', student_id=s.id) }}" class="fw-bold font-monospace text-decoration-none text-primary">
+                                {{ s.enrollment_no }}
+                            </a>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2.5">
+                                <div class="user-avatar" style="width: 30px; height: 30px; font-size: 0.75rem; flex-shrink: 0;">
+                                    {{ s.full_name[:1].upper() }}
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-dark">{{ s.full_name }}</div>
+                                    <small class="text-muted">{{ s.email }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="fw-semibold text-dark">{{ s.course.code }}</div>
+                            <small class="text-muted">{{ s.branch }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">Sem {{ s.semester }} &bull; Div {{ s.division }}</span>
+                        </td>
+                        <td class="small text-muted">{{ s.mobile }}</td>
+                        <td>
+                            <span class="badge {% if s.status == 'Active' %}bg-success{% elif s.status == 'Detained' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                {{ s.status }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('student.view_profile', student_id=s.id) }}" class="btn btn-outline-secondary" title="View Profile">
+                                    <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                </a>
+                                <a href="{{ url_for('student.edit', student_id=s.id) }}" class="btn btn-outline-primary" title="Edit Student">
+                                    <i data-lucide="edit-2" style="width: 14px; height: 14px;"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('student.delete', student_id=s.id) }}" class="d-inline" onsubmit="return confirm('Permanently delete student {{ s.enrollment_no }}? This will remove all allocations.');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn btn-outline-danger" title="Delete Student">
+                                        <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <div class="my-2">
+                                <i data-lucide="user-x" class="text-muted mb-2" style="width: 36px; height: 36px;"></i>
+                                <h6>No Candidate Records Found</h6>
+                                <p class="small mb-0">Try clearing or adjusting your search filters.</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if students.pages > 1 %}
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center py-3">
+        <small class="text-muted">Showing page {{ students.page }} of {{ students.pages }} ({{ students.total }} total candidates)</small>
+        <ul class="pagination pagination-sm mb-0">
+            {% if students.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('student.index', page=students.prev_num, q=search_query, course_id=course_filter, semester=semester_filter) }}">Previous</a></li>
+            {% endif %}
+            {% if students.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('student.index', page=students.next_num, q=search_query, course_id=course_filter, semester=semester_filter) }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

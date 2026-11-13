@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Seat Allocation Hub{% endblock %}
+{% block page_title %}Intelligent Seat Allocation Management{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Seat Allocation Control Center</h4>
+        <p class="text-muted small mb-0">Automated multi-strategy allocation, visual arrangement grid, and manual adjustments.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('allocation.wizard') }}" class="btn btn-pv-accent d-flex align-items-center gap-1">
+            <i data-lucide="sparkles" style="width: 16px;"></i> Run Allocation Wizard
+        </a>
+        <a href="{{ url_for('allocation.visual_grid') }}" class="btn btn-pv-primary d-flex align-items-center gap-1">
+            <i data-lucide="grid" style="width: 16px;"></i> Visual Seating Grid
+        </a>
+        <a href="{{ url_for('allocation.manual') }}" class="btn btn-outline-secondary d-flex align-items-center gap-1">
+            <i data-lucide="arrow-left-right" style="width: 16px;"></i> Manual Swap
+        </a>
+    </div>
+</div>
+
+<!-- Examination Allocation Status Table -->
+<div class="card card-pv mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="d-flex align-items-center gap-2">
+            <i data-lucide="calendar" class="text-primary" style="width: 18px;"></i>
+            Examinations & Allocation Status
+        </span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Exam Code</th>
+                    <th>Subject</th>
+                    <th>Date & Timing</th>
+                    <th>Eligible Students</th>
+                    <th>Allocated Seats</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if exams %}
+                    {% for ex in exams %}
+                    <tr>
+                        <td><strong>{{ ex.exam_code }}</strong></td>
+                        <td>
+                            <div class="fw-semibold text-dark">{{ ex.subject.name }}</div>
+                            <small class="text-muted">{{ ex.course.code }} (Sem {{ ex.semester }})</small>
+                        </td>
+                        <td>
+                            <div>{{ ex.exam_date.strftime('%d-%b-%Y') }}</div>
+                            <small class="text-muted">{{ ex.start_time.strftime('%I:%M %p') }}</small>
+                        </td>
+                        <td><span class="badge bg-light text-dark border">{{ ex.eligible_count }} Candidates</span></td>
+                        <td>
+                            <span class="badge {% if ex.is_fully_allocated %}bg-success{% elif ex.allocated_count > 0 %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                                {{ ex.allocated_count }} Seats
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge {% if ex.status == 'Allocated' %}bg-success{% elif ex.status == 'Scheduled' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                {{ ex.status }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('allocation.wizard', exam_id=ex.id) }}" class="btn btn-outline-success" title="Run Allocation">
+                                    <i data-lucide="sparkles" style="width: 14px;"></i> Allocate
+                                </a>
+                                <a href="{{ url_for('allocation.visual_grid', exam_id=ex.id) }}" class="btn btn-outline-primary" title="View Grid">
+                                    <i data-lucide="grid" style="width: 14px;"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('allocation.clear', exam_id=ex.id) }}" class="d-inline" onsubmit="return confirm('Clear all seat allocations for {{ ex.exam_code }}?');">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn btn-outline-danger" title="Clear Allocations" {% if ex.allocated_count == 0 %}disabled{% endif %}>
+                                        <i data-lucide="rotate-ccw" style="width: 14px;"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No scheduled examinations found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Allocation Audit History -->
+<div class="card card-pv">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="d-flex align-items-center gap-2">
+            <i data-lucide="history" class="text-secondary" style="width: 18px;"></i>
+            Recent Allocation Engine Audit Trail
+        </span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Exam</th>
+                    <th>Action</th>
+                    <th>Execution Details</th>
+                    <th>Performed By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if history %}
+                    {% for h in history %}
+                    <tr>
+                        <td class="small text-muted text-nowrap">{{ h.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td><code>{{ h.examination.exam_code }}</code></td>
+                        <td><span class="badge bg-light text-dark border">{{ h.action }}</span></td>
+                        <td class="small">{{ h.details }}</td>
+                        <td class="small text-muted">{{ h.performed_by.username if h.performed_by else 'System' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No allocation history recorded.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

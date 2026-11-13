@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Hall Roster: {{ hall.hall_code }}{% endblock %}
+{% block page_title %}Hall Candidate Attendance Sheet{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Hall Attendance Roster: {{ hall.hall_code }}</h4>
+        <p class="text-muted small mb-0">Exam: <strong>{{ exam.exam_code }} - {{ exam.exam_name }}</strong> &bull; Date: {{ exam.exam_date.strftime('%d-%b-%Y') }} ({{ exam.start_time.strftime('%I:%M %p') }} - {{ exam.end_time.strftime('%I:%M %p') }})</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('invigilator.download_roster_pdf', hall_id=hall.id, exam_id=exam.id) }}" class="btn btn-sm btn-pv-primary d-flex align-items-center gap-1">
+            <i data-lucide="download" style="width: 16px;"></i> Download PDF Sheet
+        </a>
+        <a href="{{ url_for('invigilator.dashboard') }}" class="btn btn-sm btn-outline-secondary">
+            Back to Duties
+        </a>
+    </div>
+</div>
+
+<div class="card card-pv">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="d-flex align-items-center gap-2">
+            <i data-lucide="users" class="text-primary" style="width: 20px;"></i>
+            Candidates Allocated to Hall {{ hall.hall_code }}
+        </span>
+        <span class="badge bg-light text-dark border">{{ allocations|length }} Candidates</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Seat No</th>
+                    <th>Row & Col</th>
+                    <th>Enrollment No</th>
+                    <th>Student Name</th>
+                    <th>Course & Branch</th>
+                    <th>Div</th>
+                    <th>Candidate Signature</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if allocations %}
+                    {% for a in allocations %}
+                    <tr>
+                        <td><span class="badge bg-primary fs-6">{{ a.seat_identifier }}</span></td>
+                        <td>Row {{ a.row_num }}, Col {{ a.col_num }}</td>
+                        <td><code>{{ a.student.enrollment_no }}</code></td>
+                        <td class="fw-semibold text-dark">{{ a.student.full_name }}</td>
+                        <td>{{ a.student.course.code }} ({{ a.student.branch }})</td>
+                        <td>Div {{ a.student.division }}</td>
+                        <td style="width: 140px; border-bottom: 1px dashed #cbd5e1;"></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No students allocated to this hall for this examination.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

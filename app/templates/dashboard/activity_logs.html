@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Activity & Audit Logs{% endblock %}
+{% block page_title %}System Audit Trail & Access Logs{% endblock %}
+
+{% block content %}
+<div class="card card-pv">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <i data-lucide="shield-alert" class="text-primary" style="width: 20px;"></i>
+            <span>System Activity Logs</span>
+        </div>
+        <!-- Module Filter Form -->
+        <form method="GET" class="d-flex gap-2 align-items-center">
+            <select name="module" class="form-select form-select-sm" onchange="this.form.submit()">
+                <option value="">-- All Modules --</option>
+                {% for m in modules %}
+                <option value="{{ m }}" {% if selected_module == m %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+            {% if selected_module %}
+            <a href="{{ url_for('admin.activity_logs') }}" class="btn btn-sm btn-outline-secondary">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Module</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                    <th>IP Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if logs.items %}
+                    {% for l in logs.items %}
+                    <tr>
+                        <td class="text-nowrap small text-muted">{{ l.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td><span class="fw-semibold text-dark">{{ l.user_name }}</span></td>
+                        <td><span class="badge bg-light text-dark border">{{ l.module }}</span></td>
+                        <td class="fw-semibold text-primary">{{ l.action }}</td>
+                        <td class="small text-muted">{{ l.details }}</td>
+                        <td class="small text-muted font-monospace">{{ l.ip_address or '127.0.0.1' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No logs recorded for this criteria.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if logs.pages > 1 %}
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+        <small class="text-muted">Page {{ logs.page }} of {{ logs.pages }}</small>
+        <ul class="pagination pagination-sm mb-0">
+            {% if logs.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('admin.activity_logs', page=logs.prev_num, module=selected_module) }}">Previous</a></li>
+            {% endif %}
+            {% if logs.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('admin.activity_logs', page=logs.next_num, module=selected_module) }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

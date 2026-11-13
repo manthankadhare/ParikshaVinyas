@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Examination Details: {{ exam.exam_code }}{% endblock %}
+{% block page_title %}Examination Dossier & Eligibility Status{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">{{ exam.exam_code }}: {{ exam.exam_name }}</h4>
+        <p class="text-muted small mb-0">{{ exam.subject.code }} &bull; {{ exam.course.name }} (Sem {{ exam.semester }}) &bull; Date: {{ exam.exam_date.strftime('%d-%b-%Y') }}</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('allocation.wizard', exam_id=exam.id) }}" class="btn btn-sm btn-pv-accent d-flex align-items-center gap-1">
+            <i data-lucide="sparkles" style="width: 16px;"></i> Auto Allocate Seats
+        </a>
+        <a href="{{ url_for('allocation.visual_grid', exam_id=exam.id) }}" class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+            <i data-lucide="grid" style="width: 16px;"></i> View Seating Grid
+        </a>
+        <a href="{{ url_for('reports.exam_pdf', exam_id=exam.id) }}" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+            <i data-lucide="download" style="width: 16px;"></i> Download PDF
+        </a>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Eligible Candidates</div>
+                <div class="stat-val">{{ exam.eligible_count }}</div>
+            </div>
+            <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                <i data-lucide="users"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Seats Allocated</div>
+                <div class="stat-val text-success">{{ exam.allocated_count }}</div>
+            </div>
+            <div class="stat-icon bg-success bg-opacity-10 text-success">
+                <i data-lucide="check-circle"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div>
+                <div class="stat-label">Unallocated Candidates</div>
+                <div class="stat-val {% if exam.eligible_count > exam.allocated_count %}text-danger{% else %}text-muted{% endif %}">
+                    {{ exam.eligible_count - exam.allocated_count }}
+                </div>
+            </div>
+            <div class="stat-icon bg-danger bg-opacity-10 text-danger">
+                <i data-lucide="user-x"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs: Eligible Candidates vs Current Seat Allocations -->
+<div class="card card-pv">
+    <div class="card-header border-bottom-0 pb-0">
+        <ul class="nav nav-tabs card-header-tabs" id="examTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="alloc-tab" data-bs-toggle="tab" data-bs-target="#alloc-pane" type="button">
+                    <i data-lucide="grid" style="width: 16px;"></i> Current Seat Allocations ({{ allocations|length }})
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="eligible-tab" data-bs-toggle="tab" data-bs-target="#eligible-pane" type="button">
+                    <i data-lucide="users" style="width: 16px;"></i> Registered Eligible Candidates ({{ eligible|length }})
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content" id="examTabsContent">
+        <!-- Allocations Tab -->
+        <div class="tab-pane fade show active" id="alloc-pane">
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Seat ID</th>
+                            <th>Hall Code</th>
+                            <th>Row / Col</th>
+                            <th>Enrollment No</th>
+                            <th>Student Name</th>
+                            <th>Division</th>
+                            <th>Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if allocations %}
+                            {% for a in allocations %}
+                            <tr>
+                                <td><span class="badge bg-primary fs-6">{{ a.seat_identifier }}</span></td>
+                                <td><strong>{{ a.hall.hall_code }}</strong></td>
+                                <td>R-{{ a.row_num }} &bull; C-{{ a.col_num }}</td>
+                                <td><code>{{ a.student.enrollment_no }}</code></td>
+                                <td class="fw-semibold text-dark">{{ a.student.full_name }}</td>
+                                <td>Div {{ a.student.division }}</td>
+                                <td class="small text-muted">{{ a.strategy_used }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    No seats allocated yet. Click "Auto Allocate Seats" to trigger the engine.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Eligible Candidates Tab -->
+        <div class="tab-pane fade" id="eligible-pane">
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Enrollment No</th>
+                            <th>Student Name</th>
+                            <th>Course / Branch</th>
+                            <th>Semester</th>
+                            <th>Division</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for el in eligible %}
+                        <tr>
+                            <td><code>{{ el.student.enrollment_no }}</code></td>
+                            <td class="fw-semibold text-dark">{{ el.student.full_name }}</td>
+                            <td>{{ el.student.course.code }} ({{ el.student.branch }})</td>
+                            <td>Sem {{ el.student.semester }}</td>
+                            <td>Div {{ el.student.division }}</td>
+                            <td>
+                                <span class="badge {% if el.student.status == 'Active' %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ el.student.status }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Test Cases Repository{% endblock %}
+{% block page_title %}STQA Test Cases Repository & Execution Matrix{% endblock %}
+
+{% block content %}
+<div class="card card-pv">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h5 class="mb-0 fw-bold">Test Case Specification & Results Matrix</h5>
+            <small class="text-muted">Equivalence classes, boundary testing, negative validation & execution records</small>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('qa.ai_workspace') }}" class="btn btn-sm btn-pv-accent d-flex align-items-center gap-1">
+                <i data-lucide="brain" style="width: 16px;"></i> AI Generator
+            </a>
+            <a href="{{ url_for('qa.add_test_case') }}" class="btn btn-sm btn-pv-primary d-flex align-items-center gap-1">
+                <i data-lucide="plus-circle" style="width: 16px;"></i> Add Manual Case
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="card-body bg-light border-bottom p-3">
+        <form method="GET" class="row g-2 align-items-center">
+            <div class="col-md-4">
+                <select name="module" class="form-select form-select-sm">
+                    <option value="">-- All Modules --</option>
+                    {% for m in modules %}
+                    <option value="{{ m }}" {% if module_filter == m %}selected{% endif %}>{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="status" class="form-select form-select-sm">
+                    <option value="">-- Execution Status --</option>
+                    <option value="Pass" {% if status_filter == 'Pass' %}selected{% endif %}>Pass</option>
+                    <option value="Fail" {% if status_filter == 'Fail' %}selected{% endif %}>Fail</option>
+                    <option value="Blocked" {% if status_filter == 'Blocked' %}selected{% endif %}>Blocked</option>
+                    <option value="Not Executed" {% if status_filter == 'Not Executed' %}selected{% endif %}>Not Executed</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="type" class="form-select form-select-sm">
+                    <option value="">-- Scenario Type --</option>
+                    <option value="Positive" {% if type_filter == 'Positive' %}selected{% endif %}>Positive Scenario</option>
+                    <option value="Negative" {% if type_filter == 'Negative' %}selected{% endif %}>Negative / Edge Scenario</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-sm btn-primary flex-grow-1">Filter</button>
+                {% if module_filter or status_filter or type_filter %}
+                <a href="{{ url_for('qa.test_cases') }}" class="btn btn-sm btn-outline-secondary">Reset</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Case ID</th>
+                    <th>Module</th>
+                    <th>Scenario & Inputs</th>
+                    <th>Expected Result</th>
+                    <th>Technique</th>
+                    <th>Status</th>
+                    <th class="text-end">Execution Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if cases.items %}
+                    {% for tc in cases.items %}
+                    <tr>
+                        <td><code>{{ tc.case_code }}</code></td>
+                        <td><span class="badge bg-light text-dark border">{{ tc.module }}</span></td>
+                        <td>
+                            <div class="fw-semibold text-dark">{{ tc.scenario }}</div>
+                            {% if tc.test_input %}
+                            <small class="text-muted d-block font-monospace" style="font-size: 0.75rem;">Input: {{ tc.test_input[:60] }}...</small>
+                            {% endif %}
+                        </td>
+                        <td class="small text-muted" style="max-width: 260px;">{{ tc.expected_result }}</td>
+                        <td><span class="badge bg-light text-secondary border small">{{ tc.test_technique }}</span></td>
+                        <td>
+                            <span class="badge-status {% if tc.status == 'Pass' %}badge-pass{% elif tc.status == 'Fail' %}badge-fail{% elif tc.status == 'Blocked' %}badge-blocked{% else %}badge-not-exec{% endif %}">
+                                {{ tc.status }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <div class="dropdown d-inline-block">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Update
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                    <li>
+                                        <form method="POST" action="{{ url_for('qa.quick_status_update', case_id=tc.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="status" value="Pass">
+                                            <input type="hidden" name="actual_result" value="Assertion passed as expected.">
+                                            <button type="submit" class="dropdown-item text-success"><i data-lucide="check" style="width: 14px;"></i> Mark Pass</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ url_for('qa.quick_status_update', case_id=tc.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="status" value="Fail">
+                                            <input type="hidden" name="actual_result" value="Unexpected condition or constraint failure.">
+                                            <button type="submit" class="dropdown-item text-danger"><i data-lucide="x" style="width: 14px;"></i> Mark Fail</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ url_for('qa.quick_status_update', case_id=tc.id) }}">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="status" value="Blocked">
+                                            <input type="hidden" name="actual_result" value="Preconditions unmet or environment blocked.">
+                                            <button type="submit" class="dropdown-item text-warning"><i data-lucide="alert-circle" style="width: 14px;"></i> Mark Blocked</button>
+                                        </form>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('qa.edit_test_case', case_id=tc.id) }}"><i data-lucide="edit" style="width: 14px;"></i> Edit Details</a></li>
+                                    <li><a class="dropdown-item text-danger" href="{{ url_for('qa.add_defect', case_id=tc.id) }}"><i data-lucide="bug" style="width: 14px;"></i> Raise Defect</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No test cases found matching query.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if cases.pages > 1 %}
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+        <small class="text-muted">Showing {{ cases.items|length }} of {{ cases.total }} test cases</small>
+        <ul class="pagination pagination-sm mb-0">
+            {% if cases.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('qa.test_cases', page=cases.prev_num, module=module_filter, status=status_filter, type=type_filter) }}">Previous</a></li>
+            {% endif %}
+            {% if cases.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('qa.test_cases', page=cases.next_num, module=module_filter, status=status_filter, type=type_filter) }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Manual Seat Allocation & Swap{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Manual Allocation Engine{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-4">
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-1 fw-semibold mb-2">
+                <i data-lucide="arrow-left-right" style="width: 15px; height: 15px; vertical-align: -2px;"></i>
+                Bidirectional Swap Engine
+            </span>
+            <h4 class="fw-bold mb-1 text-dark">Manual Seat Allocation & Student Reassignment</h4>
+            <p class="text-muted small mb-0">Reassign candidates to specific desks, resolve special requirements, and perform conflict-free bidirectional seat swaps.</p>
+        </div>
+
+        <div class="card card-pv shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="sliders" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <strong>Target Assignment Parameters</strong>
+                </span>
+                <a href="{{ url_for('allocation.index') }}" class="btn btn-sm btn-outline-secondary">Back to Hub</a>
+            </div>
+            <div class="card-body p-4">
+                <!-- Exam Selector trigger to reload eligible students -->
+                <div class="mb-4">
+                    <label class="form-label small fw-semibold text-secondary">Step 1: Choose Active Examination</label>
+                    <select class="form-select" onchange="location.href='{{ url_for('allocation.manual') }}?exam_id=' + this.value;">
+                        {% for e in exams %}
+                        <option value="{{ e.id }}" {% if selected_exam_id == e.id %}selected{% endif %}>
+                            {{ e.exam_code }} &bull; {{ e.exam_name }} ({{ e.exam_date.strftime('%d-%b-%Y') }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <form method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold text-secondary">Step 2: Select Student Candidate <span class="text-danger">*</span></label>
+                            {{ form.student_id(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Step 3: Target Examination Hall <span class="text-danger">*</span></label>
+                            {{ form.hall_id(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small fw-semibold text-secondary">Target Row <span class="text-danger">*</span></label>
+                            {{ form.row_num(class="form-control", type="number", min="1", placeholder="1") }}
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small fw-semibold text-secondary">Target Column <span class="text-danger">*</span></label>
+                            {{ form.col_num(class="form-control", type="number", min="1", placeholder="1") }}
+                        </div>
+                    </div>
+
+                    <div class="card bg-light border p-3 mt-4">
+                        <div class="d-flex align-items-start gap-2 small text-muted">
+                            <i data-lucide="info" class="text-primary mt-0.5" style="width: 16px; height: 16px; flex-shrink: 0;"></i>
+                            <div>
+                                <strong class="text-dark">Intelligent Bidirectional Swap Guarantee:</strong>
+                                If the selected target desk is already allocated to another candidate, the system vacates the desk through an atomic transaction, moves the first candidate in, and reassigns the previous occupant to the vacant desk.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('allocation.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-pv-primary px-4 py-2 fw-semibold shadow-sm">
+                            <i data-lucide="check-check" style="width: 16px; height: 16px;" class="me-1"></i>
+                            Save Assignment / Execute Swap
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

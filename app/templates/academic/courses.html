@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Course Management{% endblock %}
+{% block page_title %}Academic Degrees & Programmes{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Add Course Form Card -->
+    <div class="col-lg-4">
+        <div class="card card-pv">
+            <div class="card-header">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="plus-circle" class="text-primary" style="width: 18px;"></i>
+                    Add Degree Course
+                </span>
+            </div>
+            <div class="card-body p-3">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Course Code</label>
+                        <input type="text" name="code" class="form-control" placeholder="e.g. CS, IT, ME" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Course Full Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. B.Tech Computer Science" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Department</label>
+                        <input type="text" name="department" class="form-control" placeholder="e.g. Department of Engineering" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Total Semesters</label>
+                        <input type="number" name="total_semesters" class="form-control" value="8" min="1" max="10" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-pv-primary w-100">Save Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course List -->
+    <div class="col-lg-8">
+        <div class="card card-pv">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="book-open" class="text-primary" style="width: 18px;"></i>
+                    Registered Courses
+                </span>
+                <span class="badge bg-light text-dark border">{{ courses|length }} Courses</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Programme Name</th>
+                            <th>Department</th>
+                            <th>Semesters</th>
+                            <th>Students</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if courses %}
+                            {% for c in courses %}
+                            <tr>
+                                <td><strong>{{ c.code }}</strong></td>
+                                <td class="fw-semibold text-dark">{{ c.name }}</td>
+                                <td class="small text-muted">{{ c.department }}</td>
+                                <td><span class="badge bg-light text-dark border">{{ c.total_semesters }} Sems</span></td>
+                                <td><span class="badge bg-primary bg-opacity-10 text-primary">{{ c.students.count() }} Enrolled</span></td>
+                                <td class="text-end">
+                                    <a href="{{ url_for('academic.edit_course', course_id=c.id) }}" class="btn btn-sm btn-outline-secondary me-1" title="Edit Course">
+                                        <i data-lucide="edit-2" style="width: 14px;"></i>
+                                    </a>
+                                    <form method="POST" action="{{ url_for('academic.delete_course', course_id=c.id) }}" class="d-inline" onsubmit="return confirm('Delete course {{ c.code }}?');">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i data-lucide="trash-2" style="width: 14px;"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">No courses configured yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

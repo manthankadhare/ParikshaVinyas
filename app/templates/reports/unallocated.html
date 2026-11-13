@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Unallocated Students Report{% endblock %}
+{% block page_title %}Unallocated Candidates Reconciliation{% endblock %}
+
+{% block content %}
+<div class="card card-pv">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h5 class="mb-0 fw-bold">Unallocated Candidates Audit</h5>
+            <small class="text-muted">Students registered for examination without an assigned seat desk</small>
+        </div>
+        <a href="{{ url_for('reports.index') }}" class="btn btn-sm btn-outline-secondary">Back to Reports</a>
+    </div>
+
+    <!-- Exam Selector -->
+    <div class="card-body bg-light border-bottom p-3">
+        <form method="GET" class="row g-2 align-items-center">
+            <div class="col-md-9">
+                <select name="exam_id" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="">-- Choose Examination to Check --</option>
+                    {% for e in exams %}
+                    <option value="{{ e.id }}" {% if selected_exam and selected_exam.id == e.id %}selected{% endif %}>
+                        {{ e.exam_code }} &bull; {{ e.exam_name }} ({{ e.exam_date.strftime('%d-%b-%Y') }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-sm btn-primary w-100">Audit Status</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Enrollment No</th>
+                    <th>Candidate Name</th>
+                    <th>Course & Branch</th>
+                    <th>Semester</th>
+                    <th>Division</th>
+                    <th>Status</th>
+                    <th class="text-end">Quick Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if selected_exam %}
+                    {% if unallocated_students %}
+                        {% for s in unallocated_students %}
+                        <tr>
+                            <td><code>{{ s.enrollment_no }}</code></td>
+                            <td class="fw-semibold text-danger">{{ s.full_name }}</td>
+                            <td>{{ s.course.code }} ({{ s.branch }})</td>
+                            <td>Sem {{ s.semester }}</td>
+                            <td>Div {{ s.division }}</td>
+                            <td><span class="badge bg-danger">Unallocated</span></td>
+                            <td class="text-end">
+                                <a href="{{ url_for('allocation.manual', exam_id=selected_exam.id) }}" class="btn btn-sm btn-outline-primary">
+                                    Assign Seat Manually
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-success fw-semibold">
+                                <i data-lucide="check-circle" style="width: 24px; height: 24px;" class="mb-2 d-block mx-auto"></i>
+                                All {{ selected_exam.eligible_count }} eligible candidates are successfully allocated! Zero unallocated students.
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">Please select an examination above to view unallocated candidates.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

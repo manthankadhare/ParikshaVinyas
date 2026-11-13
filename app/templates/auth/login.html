@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In — Examination Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 85vh;">
+    <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+        <!-- University Portal Identity Card -->
+        <div class="text-center mb-3">
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 py-2 px-3 rounded-pill fw-semibold mb-2">
+                <i data-lucide="graduation-cap" style="width: 16px; height: 16px; vertical-align: -2px;"></i>
+                {{ COLLEGE_NAME }}
+            </span>
+            <div class="text-muted small">Examination Control & Allocation Portal &bull; AY {{ ACADEMIC_YEAR }}</div>
+        </div>
+
+        <div class="card card-pv shadow-lg border-0">
+            <div class="card-body p-4 p-sm-5">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex p-3 rounded-4 bg-primary text-white mb-3 shadow-sm" style="background: linear-gradient(135deg, #1d4ed8 0%, #0a1128 100%) !important;">
+                        <i data-lucide="award" style="width: 36px; height: 36px;"></i>
+                    </div>
+                    <h3 class="fw-bold mb-0 text-dark">{{ APP_NAME }}</h3>
+                    <div class="text-warning fw-bold fs-6">परीक्षाविन्यास</div>
+                    <p class="text-muted small mt-1 mb-0">{{ APP_TAGLINE }}</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Username / Enrollment No</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i data-lucide="user" style="width: 18px;"></i></span>
+                            {{ form.username(class="form-control border-start-0" + (" is-invalid" if form.username.errors else ""), placeholder="admin or student enrollment no", id="usernameInput") }}
+                        </div>
+                        {% for err in form.username.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i data-lucide="lock" style="width: 18px;"></i></span>
+                            {{ form.password(class="form-control border-start-0" + (" is-invalid" if form.password.errors else ""), placeholder="••••••••", id="passwordInput") }}
+                        </div>
+                        {% for err in form.password.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                        <div class="form-check mb-0">
+                            {{ form.remember(class="form-check-input") }}
+                            <label class="form-check-label small text-muted" for="{{ form.remember.id }}">Remember this browser</label>
+                        </div>
+                        <span class="badge bg-light text-muted border">SSL Secured</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-pv-primary w-100 py-2 fw-semibold shadow-sm">
+                        Sign In to Examination Portal
+                    </button>
+                </form>
+
+                <!-- Demo Credentials Quick Selector -->
+                <div class="mt-4 pt-3 border-top">
+                    <div class="text-muted small fw-semibold mb-2 text-center d-flex align-items-center justify-content-center gap-1">
+                        <i data-lucide="key" style="width: 14px;"></i>
+                        <span>STQA Evaluation Quick Credentials:</span>
+                    </div>
+                    <div class="d-flex flex-column gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start d-flex justify-content-between align-items-center" onclick="fillCreds('admin', 'Admin@2026')">
+                            <span><strong>Admin:</strong> <code>admin</code></span>
+                            <span class="badge bg-primary">Admin@2026</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start d-flex justify-content-between align-items-center" onclick="fillCreds('invig_sharma', 'Invig@2026')">
+                            <span><strong>Invigilator:</strong> <code>invig_sharma</code></span>
+                            <span class="badge bg-secondary">Invig@2026</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start d-flex justify-content-between align-items-center" onclick="fillCreds('EN2026101', 'Student@6101')">
+                            <span><strong>Student:</strong> <code>EN2026101</code></span>
+                            <span class="badge bg-success">Student@6101</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-muted small mt-3">
+            &copy; 2026 {{ COLLEGE_NAME }} &bull; STQA Academic Project
+        </div>
+    </div>
+</div>
+
+<script>
+function fillCreds(u, p) {
+    document.getElementById('usernameInput').value = u;
+    document.getElementById('passwordInput').value = p;
+}
+</script>
+{% endblock %}

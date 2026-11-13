@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Invigilator Duty Roster{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — Invigilation Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div>
+        <div class="d-flex align-items-center gap-2 mb-1">
+            <h4 class="fw-bold mb-0 text-dark">Invigilation Duty Schedule & Roster</h4>
+            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-0.5">Faculty Portal</span>
+        </div>
+        <p class="text-muted small mb-0">
+            Assigned Faculty: <strong class="text-dark">{{ invigilator.full_name if invigilator else current_user.username }}</strong> 
+            {% if invigilator %}&bull; Department: {{ invigilator.department }} &bull; Faculty ID: <code class="font-monospace text-primary">{{ invigilator.faculty_id }}</code>{% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="card card-pv">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="d-flex align-items-center gap-2">
+            <i data-lucide="clipboard-check" class="text-primary" style="width: 19px; height: 19px;"></i>
+            <strong>Assigned Examination Halls & Duties</strong>
+        </span>
+        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ assignments|length }} Duties Scheduled</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-pv mb-0">
+            <thead>
+                <tr>
+                    <th>Examination</th>
+                    <th>Date & Timing Window</th>
+                    <th>Assigned Hall</th>
+                    <th>Building & Floor</th>
+                    <th>Duty Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if assignments %}
+                    {% for a in assignments %}
+                    <tr>
+                        <td>
+                            <div class="fw-bold text-dark font-monospace">{{ a.examination.exam_code }}</div>
+                            <div class="small text-muted">{{ a.examination.subject.name }}</div>
+                        </td>
+                        <td>
+                            <div class="text-dark fw-medium">{{ a.examination.exam_date.strftime('%d-%b-%Y') }}</div>
+                            <small class="text-muted">{{ a.examination.start_time.strftime('%I:%M %p') }} - {{ a.examination.end_time.strftime('%I:%M %p') }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-primary fs-6 font-monospace px-2.5 py-1">{{ a.hall.hall_code }}</span>
+                            <div class="small text-muted mt-0.5">{{ a.hall.hall_name }}</div>
+                        </td>
+                        <td>
+                            <div class="text-dark">{{ a.hall.building }}</div>
+                            <small class="text-muted">Floor {{ a.hall.floor }}</small>
+                        </td>
+                        <td><span class="badge bg-success">{{ a.status }}</span></td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('invigilator.hall_roster', hall_id=a.hall.id, exam_id=a.examination.id) }}" class="btn btn-outline-primary d-flex align-items-center gap-1" title="View Students">
+                                    <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                                    <span class="d-none d-md-inline">Roster</span>
+                                </a>
+                                <a href="{{ url_for('invigilator.download_roster_pdf', hall_id=a.hall.id, exam_id=a.examination.id) }}" class="btn btn-outline-secondary d-flex align-items-center gap-1" title="Download Attendance PDF">
+                                    <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+                                    <span class="d-none d-md-inline">PDF</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i data-lucide="calendar" class="text-muted mb-2" style="width: 32px; height: 32px;"></i>
+                            <p class="mb-0">No invigilation duties currently assigned for the active examination cycle.</p>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Student Examination Portal{% endblock %}
+{% block page_title %}{{ COLLEGE_NAME }} — My Examination Schedule & Seating Allotment{% endblock %}
+
+{% block content %}
+<div class="row g-4 mb-4">
+    <!-- Student Info Card -->
+    <div class="col-lg-4">
+        <div class="card card-pv p-4 text-center h-100 mb-0">
+            <div class="user-avatar mx-auto mb-3" style="width: 72px; height: 72px; font-size: 1.8rem; background: linear-gradient(135deg, var(--pv-secondary), #3b82f6); box-shadow: var(--pv-shadow-sm);">
+                {{ student.full_name[:1].upper() }}
+            </div>
+            <h5 class="fw-bold mb-1 text-dark">{{ student.full_name }}</h5>
+            <div class="text-primary fw-bold font-monospace mb-2">{{ student.enrollment_no }}</div>
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 mx-auto mb-3 px-3 py-1">Enrolled Candidate &bull; Eligible</span>
+
+            <div class="list-group list-group-flush text-start small border-top pt-3">
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Academic Programme:</span>
+                    <strong class="text-dark">{{ student.course.code }}</strong>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Specialization / Branch:</span>
+                    <span class="text-dark">{{ student.branch }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">Semester & Division:</span>
+                    <span class="badge bg-light text-dark border">Sem {{ student.semester }} &bull; Div {{ student.division }}</span>
+                </div>
+                <div class="list-group-item px-0 d-flex justify-content-between">
+                    <span class="text-muted">University Email:</span>
+                    <span class="text-truncate" style="max-width: 170px;">{{ student.email }}</span>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-2">
+                <a href="{{ url_for('student_portal.download_slip') }}" class="btn btn-pv-primary w-100 d-flex align-items-center justify-content-center gap-2 shadow-sm py-2">
+                    <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
+                    <span>Download Official Admit Slip (PDF)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam Timetable & Seat Allotment Card -->
+    <div class="col-lg-8">
+        <div class="card card-pv h-100 mb-0">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="calendar" class="text-primary" style="width: 19px; height: 19px;"></i>
+                    <strong>Registered Examination Timetable & Seating</strong>
+                </span>
+                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25">{{ exams|length }} Examinations</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-pv mb-0">
+                    <thead>
+                        <tr>
+                            <th>Exam Code</th>
+                            <th>Subject / Paper</th>
+                            <th>Date & Timing</th>
+                            <th>Allocated Hall</th>
+                            <th>Assigned Seat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if exams %}
+                            {% for ex in exams %}
+                            {% set alloc = alloc_map.get(ex.id) %}
+                            <tr>
+                                <td><span class="badge bg-light text-dark border font-monospace">{{ ex.exam_code }}</span></td>
+                                <td>
+                                    <div class="fw-semibold text-dark">{{ ex.subject.name }}</div>
+                                    <small class="text-muted">{{ ex.subject.code }} &bull; {{ ex.exam_type }}</small>
+                                </td>
+                                <td>
+                                    <div class="fw-medium text-dark">{{ ex.exam_date.strftime('%d-%b-%Y') }}</div>
+                                    <small class="text-muted">{{ ex.start_time.strftime('%I:%M %p') }} - {{ ex.end_time.strftime('%I:%M %p') }}</small>
+                                </td>
+                                <td>
+                                    {% if alloc %}
+                                        <div class="fw-bold text-dark">{{ alloc.hall.hall_code }}</div>
+                                        <small class="text-muted">{{ alloc.hall.building }} (Fl {{ alloc.hall.floor }})</small>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Pending</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if alloc %}
+                                        <span class="badge bg-primary fs-6 font-monospace px-2.5 py-1">
+                                            {{ alloc.seat_identifier }}
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Under Process</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">
+                                    <i data-lucide="check-circle" class="text-muted mb-2" style="width: 32px; height: 32px;"></i>
+                                    <p class="mb-0">No active examinations scheduled for your current semester.</p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card card-pv">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="bug" class="text-danger" style="width: 20px;"></i>
+                    {{ title }}
+                </span>
+                <a href="{{ url_for('qa.defects') }}" class="btn btn-sm btn-outline-secondary">Back to Defects</a>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Bug ID <span class="text-danger">*</span></label>
+                            {{ form.bug_code(class="form-control" + (" is-invalid" if form.bug_code.errors else ""), placeholder="e.g. BUG_ALLOC_001") }}
+                            {% for err in form.bug_code.errors %}
+                                <div class="invalid-feedback">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label small fw-semibold">Linked Test Case (Optional)</label>
+                            {{ form.test_case_id(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold">Defect Summary / Title <span class="text-danger">*</span></label>
+                            {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else ""), placeholder="e.g. Concurrent allocation attempt causes duplicate seat assignment without transaction rollback") }}
+                            {% for err in form.title.errors %}
+                                <div class="invalid-feedback">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold">Steps to Reproduce <span class="text-danger">*</span></label>
+                            {{ form.steps_to_reproduce(class="form-control", rows="3", placeholder="1. Open Examination EX-101...\n2. Select Hall H-101 with 40 seats...\n3. Trigger allocation with 45 candidates...") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Expected Result <span class="text-danger">*</span></label>
+                            {{ form.expected_result(class="form-control", rows="2") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Actual Result <span class="text-danger">*</span></label>
+                            {{ form.actual_result(class="form-control", rows="2") }}
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold">Detailed Description</label>
+                            {{ form.description(class="form-control", rows="2", placeholder="Technical context, logs, database state details") }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Severity</label>
+                            {{ form.severity(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Priority</label>
+                            {{ form.priority(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Assigned Developer</label>
+                            {{ form.assigned_to(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                        <a href="{{ url_for('qa.defects') }}" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-4">Register Defect</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}AI-Assisted Testing Workspace{% endblock %}
+{% block page_title %}STQA AI-Assisted Test Synthesizer & Root Cause Analyzer{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h4 class="fw-bold mb-1">AI-Assisted Testing & Quality Engineering Workspace</h4>
+    <p class="text-muted small">
+        Accelerate STQA academic test design using intelligent scenario synthesis, Boundary Value Analysis (BVA), Equivalence Partitioning (EP), and defect diagnosis.
+    </p>
+</div>
+
+<!-- Academic Disclaimer Alert -->
+<div class="alert alert-info border-0 p-3 small d-flex align-items-center gap-2 mb-4">
+    <i data-lucide="info" class="flex-shrink-0" style="width: 20px; height: 20px;"></i>
+    <div>
+        <strong>STQA Academic Guideline Notice:</strong>
+        The AI engine generates proposed test scenarios, boundary tests, and root cause hypotheses. 
+        It does not execute tests autonomously; all generated test cases must be reviewed and executed by human testers or automated pytest/playwright harnesses.
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Generator Form -->
+    <div class="col-lg-5">
+        <div class="card card-pv h-100">
+            <div class="card-header">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="sparkles" class="text-warning" style="width: 20px;"></i>
+                    Synthesize Test Scenarios
+                </span>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Target Application Module</label>
+                        {{ form.module_name(class="form-select") }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Scenario Category</label>
+                        {{ form.test_type(class="form-select") }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Requirement Specification / Feature Description</label>
+                        {{ form.requirement_text(class="form-control", rows="4", placeholder="e.g. As an admin, I want to allocate seats across 3 halls ensuring that adjacent seats do not have students from the same department, and blocked seats are never assigned.") }}
+                        <div class="form-text small">Enter any business logic or edge condition you wish to generate test cases for.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-pv-accent w-100 py-2 d-flex align-items-center justify-content-center gap-2">
+                        <i data-lucide="wand-2" style="width: 18px;"></i>
+                        <span>Generate STQA Test Cases</span>
+                    </button>
+                </form>
+
+                <!-- Quick Prompt Presets -->
+                <div class="mt-4 pt-3 border-top">
+                    <div class="text-muted small fw-semibold mb-2">Predefined Academic Test Prompts:</div>
+                    <div class="d-flex flex-column gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start" onclick="setPrompt('Allocation Engine', 'Test boundary conditions when eligible student count exceeds available hall capacity by exactly 1 seat. Verify atomic rollback without partial allocations.')">
+                            &bull; Capacity Boundary Overload (BVA)
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start" onclick="setPrompt('Student Management', 'Validate CSV bulk import with invalid email format, negative semester numbers, and duplicate enrollment records.')">
+                            &bull; Student Ingestion & Boundary Errors
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary text-start" onclick="setPrompt('Exam Scheduling', 'Verify detection and prevention of overlapping examination schedules for the same class or examination hall.')">
+                            &bull; Overlapping Schedule Conflict Check
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generated Results or Defect Diagnosis Panel -->
+    <div class="col-lg-7">
+        <div class="card card-pv h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="file-output" class="text-primary" style="width: 20px;"></i>
+                    Synthesized Scenarios & Analysis Output
+                </span>
+                {% if generated_cases %}
+                <span class="badge bg-success">{{ generated_cases|length }} Scenarios Synthesized</span>
+                {% endif %}
+            </div>
+            <div class="card-body p-4" style="max-height: 640px; overflow-y: auto;">
+                {% if defect_analysis %}
+                    <div class="alert alert-warning border-0 p-3 mb-3">
+                        <h6 class="fw-bold mb-1 d-flex align-items-center gap-1">
+                            <i data-lucide="activity" style="width: 18px;"></i> AI Defect Diagnostic Report
+                        </h6>
+                    </div>
+                    <div class="bg-light p-3 rounded-3 border font-monospace small" style="white-space: pre-wrap;">{{ defect_analysis }}</div>
+                {% elif generated_cases %}
+                    <div class="d-flex flex-column gap-3">
+                        {% for c in generated_cases %}
+                        <div class="card border shadow-none p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <code class="text-primary fw-bold">{{ c.case_code }}</code>
+                                    <span class="badge bg-light text-dark border ms-2">{{ c.test_technique }}</span>
+                                    <span class="badge {% if c.test_type == 'Positive' %}bg-success{% else %}bg-danger{% endif %} ms-1">
+                                        {{ c.test_type }}
+                                    </span>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary" onclick="importCase({{ c | tojson | forceescape }})">
+                                    <i data-lucide="plus" style="width: 14px;"></i> Import to Repo
+                                </button>
+                            </div>
+                            <h6 class="fw-bold mb-2 text-dark">{{ c.scenario }}</h6>
+                            <div class="small text-muted mb-1"><strong>Preconditions:</strong> {{ c.preconditions }}</div>
+                            <div class="small text-muted mb-1"><strong>Inputs:</strong> <code>{{ c.test_input }}</code></div>
+                            <div class="small text-muted"><strong>Expected:</strong> <span class="text-success">{{ c.expected_result }}</span></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i data-lucide="cpu" class="text-muted mb-3" style="width: 48px; height: 48px;"></i>
+                        <h6>Workspace Ready for Test Synthesis</h6>
+                        <p class="small mb-0">Select an application module, enter requirement criteria, and click "Generate STQA Test Cases".</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function setPrompt(mod, text) {
+    document.querySelector('select[name="module_name"]').value = mod;
+    document.querySelector('textarea[name="requirement_text"]').value = text;
+}
+
+function importCase(caseData) {
+    fetch("{{ url_for('qa.import_ai_case') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify(caseData)
+    })
+    .then(r => r.json())
+    .then(d => {
+        if(d.success) {
+            alert(d.message);
+        } else {
+            alert("Error: " + d.message);
+        }
+    })
+    .catch(e => {
+        alert("Failed to import test case.");
+        console.error(e);
+    });
+}
+</script>
+{% endblock %}
+

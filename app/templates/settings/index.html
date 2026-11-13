@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}System Settings{% endblock %}
+{% block page_title %}Application Identity & System Configuration{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card card-pv">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex align-items-center gap-2">
+                    <i data-lucide="settings" class="text-primary" style="width: 20px;"></i>
+                    Institutional Settings & Allocation Parameters
+                </span>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold">Institution / University Name <span class="text-danger">*</span></label>
+                            <input type="text" name="college_name" class="form-control" value="{{ settings.get('college_name', COLLEGE_NAME) }}" required>
+                            <small class="text-muted">Printed at the header of all official PDF examination charts and student admit cards.</small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Academic Session / Year <span class="text-danger">*</span></label>
+                            <input type="text" name="academic_year" class="form-control" value="{{ settings.get('academic_year', ACADEMIC_YEAR) }}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold">Default Allocation Strategy</label>
+                            <select name="default_allocation_strategy" class="form-select">
+                                <option value="Sequential" {% if settings.get('default_allocation_strategy') == 'Sequential' %}selected{% endif %}>Sequential by Enrollment</option>
+                                <option value="Mixed Course" {% if settings.get('default_allocation_strategy') == 'Mixed Course' %}selected{% endif %}>Mixed Course Interleaved</option>
+                                <option value="Random" {% if settings.get('default_allocation_strategy') == 'Random' %}selected{% endif %}>Randomized Allocation</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label small fw-semibold">Examination Helpline Contact</label>
+                            <input type="text" name="helpline" class="form-control" value="{{ settings.get('helpline', '+91 (02643) 293300 / examcell@upluniversity.ac.in') }}">
+                            <small class="text-muted">Printed on candidate seating passes for emergency support.</small>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex justify-content-end">
+                        <button type="submit" class="btn btn-pv-primary px-4">Save Configuration Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
