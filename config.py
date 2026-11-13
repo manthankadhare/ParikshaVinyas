@@ -5,10 +5,15 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'parikshavinyas-super-secure-stqa-key-2026')
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        'DATABASE_URL', 
-        f"sqlite:///{os.path.join(BASE_DIR, 'instance', 'parikshavinyas.db')}"
-    )
+    if os.environ.get('VERCEL'):
+        SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:////tmp/parikshavinyas.db')
+        UPLOAD_FOLDER = '/tmp/uploads'
+    else:
+        SQLALCHEMY_DATABASE_URI = os.environ.get(
+            'DATABASE_URL', 
+            f"sqlite:///{os.path.join(BASE_DIR, 'instance', 'parikshavinyas.db')}"
+        )
+        UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Session Configuration
@@ -24,7 +29,6 @@ class Config:
     ACADEMIC_YEAR = os.environ.get('ACADEMIC_YEAR', '2025-2026')
     
     # Uploads
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max limit
     ALLOWED_EXTENSIONS = {'csv', 'png', 'jpg', 'jpeg', 'pdf'}
     
