@@ -17,9 +17,8 @@ from app.models.audit import ActivityLog, SystemSetting
 from app.services.allocation_engine import AllocationEngine
 
 
-def seed(app=None):
-    if app is None:
-        app = create_app()
+def seed():
+    app = create_app()
     with app.app_context():
         print("Initializing database tables...")
         db.create_all()

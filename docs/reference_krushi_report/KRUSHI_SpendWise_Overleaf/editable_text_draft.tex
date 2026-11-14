@@ -1,0 +1,3524 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\begin{document}
+\begin{center}
+{\Large\bfseries Extracted Editable Text Draft}\\
+{\small SpendWise -- Smart Expense Tracking and Budget Management Testing}\\
+{\small Source: KRUSHI\_STQA\_REPORT.pdf}
+\end{center}
+\textbf{Note:} This is a text-extraction draft for editing. The exact visual reproduction is compiled by \texttt{main.tex}; figures and complex tables may need manual reconstruction in this draft.
+\clearpage
+\section*{Extracted Source Page 1}
+A\\ 
+Mini Project Report\\ 
+(Software Testing and Quality Assurance(CO2405))\\ 
+
+\smallskip
+on\\ 
+“SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing”\\ 
+
+\smallskip
+Submitted as part of the curriculum of\\ 
+
+\smallskip
+Bachelor of Engineering\\ 
+in\\ 
+
+\smallskip
+Computer Engineering\\ 
+Submitted By\\ 
+
+\smallskip
+Jadav Krushi Nayankumar            230102103008\\ 
+
+\smallskip
+
+\smallskip
+Under the guidance of\\ 
+
+\smallskip
+Ms. Rupali Attarde\\ 
+
+\smallskip
+Submitted To\\ 
+
+\smallskip
+Department of Computer Engineering\\ 
+
+\smallskip
+Shroff S.R. Rotary Institute of Chemical Technology\\ 
+
+\smallskip
+2026-2027\\ 
+
+\clearpage
+\section*{Extracted Source Page 2}
+Shroff S.R. Rotary Institute of Chemical Technology\\ 
+
+\smallskip
+Department of Computer Engineering\\ 
+
+\smallskip
+Academic Year 2026–27\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+CERTIFICATE\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+This is to certify that Jadav Krushi Nayankumar, (230102103008) is a student of\\ 
+Semester VII of BE Computer Engineering, UPL University of Sustainable Technology,\\ 
+SRICT, Vataria, Ankleshwar, has successfully completed a Mini Project Report (Software\\ 
+Testing and Quality Assurance)(CO2405) and submitted the report during academic year\\ 
+2026–27.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Date:           /       /\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Subject Coordinator                           Head of the Department\\ 
+Ms. Rupali Attarde                                Ms. Mital Patel\\ 
+
+\clearpage
+\section*{Extracted Source Page 3}
+DECLARATION\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+I, Jadav Krushi Nayankumar (230102103008), am the student of Semester VII of\\ 
+BE Computer Engineering, UPL University of Sustainable Technology, SRICT, Vataria,\\ 
+hereby declare that this report is prepared by me based on the information gathered during\\ 
+the preparation of the Mini Project Report (Software Testing and Quality Assurance) in\\ 
+Semester VII.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar\\ 
+
+\smallskip
+(230102103008)\\ 
+
+\clearpage
+\section*{Extracted Source Page 4}
+ACKNOWLEDGEMENT\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+I would like to express our sincere gratitude to all those who have supported and guided us\\ 
+throughout our Mini Project Report.\\ 
+
+\smallskip
+Ms. Rupali Attarde, our Subject Coordinator, has helped us a lot with his expert advice,\\ 
+helpful feedback, and constant support. Her hard work, ideas, and support have been very\\ 
+helpful in getting us through tough times and finishing a Mini Project Report.\\ 
+
+\smallskip
+I also want to thank Ms. Mital Patel, the Head of Department, for constant support and\\ 
+leadership which have been very helpful in finishing our Mini Project Report.\\ 
+
+\smallskip
+Finally, we want to thank everyone who helped us finish this Mini Project Report (Software\\ 
+Testing and Quality Assurance), whether they were faculty, staff, or students.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar\\ 
+(230102103008)\\ 
+
+\clearpage
+\section*{Extracted Source Page 5}
+CONTENTS\\ 
+
+\smallskip
+
+\smallskip
+1 Introduction                                                                               10\\ 
+1.1 Background . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     10\\ 
+1.2 Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      10\\ 
+1.3 Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   11\\ 
+1.4 Scope of the Project . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     11\\ 
+
+\smallskip
+2 Software/Application Under Test                                                            17\\ 
+2.1 Application Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     17\\ 
+2.2 Functional Requirements of SpendWise . . . . . . . . . . . . . . . . . . . . .         17\\ 
+2.3 Non-Functional Requirements . . . . . . . . . . . . . . . . . . . . . . . . . .        18\\ 
+2.4 System Architecture / Application Flow . . . . . . . . . . . . . . . . . . . .         18\\ 
+
+\smallskip
+3 Software Testing Methodology                                                               20\\ 
+3.1 Testing Process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    20\\ 
+3.1.1 Overview of the Testing Workflow . . . . . . . . . . . . . . . . . . . .         20\\ 
+3.2 Types of Testing Used . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      21\\ 
+
+\smallskip
+4 Manual Testing                                                                             22\\ 
+4.1 Test Case Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     22\\ 
+4.1.1 Test Case Execution Summary . . . . . . . . . . . . . . . . . . . . . .          26\\ 
+4.2 Test Case Techniques . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     26\\ 
+4.2.1 Equivalence Partitioning . . . . . . . . . . . . . . . . . . . . . . . . .       26\\ 
+4.2.2 Boundary Value Analysis . . . . . . . . . . . . . . . . . . . . . . . . .        27\\ 
+4.2.3 Decision Table Testing . . . . . . . . . . . . . . . . . . . . . . . . . .       27\\ 
+4.3 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      28\\ 
+
+\smallskip
+5 Automation Testing                                                                         29\\ 
+5.1 Automation Tool . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      29\\ 
+5.2 Automation Environment . . . . . . . . . . . . . . . . . . . . . . . . . . . .         29\\ 
+5.3 Automated Test Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       30\\ 
+5.3.1 AT-01: Submit Registration Form with Empty Fields . . . . . . . . .              30\\ 
+5.3.2 AT-02: Validate Password Mismatch During Registration . . . . . . .              31\\ 
+5.3.3 AT-03: Zero-Expense Validation . . . . . . . . . . . . . . . . . . . . .         34\\ 
+5.3.4 AT-04: Verify Logout Functionality . . . . . . . . . . . . . . . . . . .         35\\ 
+5.3.5 AT-05: Negative-Budget Validation . . . . . . . . . . . . . . . . . . .          36\\ 
+5.3.6 Automation Test Summary . . . . . . . . . . . . . . . . . . . . . . .            38\\ 
+
+\clearpage
+\section*{Extracted Source Page 6}
+5.4   Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   39\\ 
+
+\smallskip
+6 AI-Based Testing                                                                           40\\ 
+6.1 Introduction to AI in Software Testing . . . . . . . . . . . . . . . . . . . . .       40\\ 
+6.2 AI Tools Used . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    40\\ 
+6.2.1 Google Gemini . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        40\\ 
+6.2.2 Claude . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     41\\ 
+6.2.3 Google NotebookLM . . . . . . . . . . . . . . . . . . . . . . . . . . .          42\\ 
+6.3 AI-Assisted Test Case Generation . . . . . . . . . . . . . . . . . . . . . . . .       43\\ 
+6.3.1 Example Prompt Used . . . . . . . . . . . . . . . . . . . . . . . . . .          43\\ 
+6.3.2 Use of AI-Generated Suggestions . . . . . . . . . . . . . . . . . . . .          44\\ 
+6.4 AI-Assisted Test Cases and Results . . . . . . . . . . . . . . . . . . . . . . .       44\\ 
+6.4.1 AI-01: Decimal Amount Validation in Expense . . . . . . . . . . . . .            44\\ 
+6.4.2 AI-02: Filter Transactions by Income . . . . . . . . . . . . . . . . . .         46\\ 
+6.4.3 AI-03: Existing Budget Category Message Validation . . . . . . . . .             46\\ 
+6.4.4 AI-04: Delete Expense Functionality . . . . . . . . . . . . . . . . . .          47\\ 
+6.4.5 AI-05: Search Transaction by Description . . . . . . . . . . . . . . . .         49\\ 
+6.5 AI-Based Test Analysis and Risk Identification . . . . . . . . . . . . . . . . .       49\\ 
+6.6 Human Validation of AI-Generated Test Cases . . . . . . . . . . . . . . . . .          50\\ 
+6.7 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      50\\ 
+
+\smallskip
+7 Defect/Bug Reporting                                                                       51\\ 
+7.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   51\\ 
+7.2 Detailed Defect Reports . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      51\\ 
+7.2.1 BUG001: Incorrect Remaining Balance . . . . . . . . . . . . . . . . .            51\\ 
+7.2.2 BUG002: Internal Server Error While Saving a Budget . . . . . . . .              52\\ 
+7.2.3 BUG003: Deleted Transaction Remains Visible . . . . . . . . . . . .              53\\ 
+7.2.4 BUG004: Month Filter Displays Records From Other Months . . . .                  54\\ 
+7.2.5 BUG005: Shopping Expense Displayed Under Food . . . . . . . . . .                55\\ 
+7.2.6 BUG006: Incorrect Search Results for Transaction Description . . . .             56\\ 
+7.2.7 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        57\\ 
+
+\smallskip
+8 Test Results and Analysis                                                                  58\\ 
+8.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   58\\ 
+8.2 Test Execution Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       58\\ 
+8.3 Test Result Calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    58\\ 
+8.4 Pass Percentage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    59\\ 
+8.5 Failure Percentage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     59\\ 
+8.6 Percentage Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       59\\ 
+8.7 Comparison of Testing Approaches . . . . . . . . . . . . . . . . . . . . . . .         60\\ 
+
+\clearpage
+\section*{Extracted Source Page 7}
+8.8   Overall Test Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     60\\ 
+8.9   Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   61\\ 
+
+\smallskip
+9 Conclusion                                                                                   62\\ 
+
+\smallskip
+REFERENCES                                                                                     63\\ 
+
+\smallskip
+ABBREVIATIONS                                                                                  64\\ 
+
+\smallskip
+Appendix                                                                                       65\\ 
+
+\clearpage
+\section*{Extracted Source Page 8}
+LIST OF TABLES\\ 
+
+\smallskip
+2.1   Functional Requirements of SpendWise . . . . . . . . . . . . . . . . . . . . .       18\\ 
+
+\smallskip
+3.1   Testing Workflow Followed for SpendWise . . . . . . . . . . . . . . . . . . .        21\\ 
+3.2   Types of Testing Used in SpendWise . . . . . . . . . . . . . . . . . . . . . .       21\\ 
+
+\smallskip
+4.1   Manual Test Cases for the SpendWise Application . . . . . . . . . . . . . . .        26\\ 
+4.2   Summary of Manual Test Results . . . . . . . . . . . . . . . . . . . . . . . .       26\\ 
+4.3   Equivalence Partitioning Test Cases . . . . . . . . . . . . . . . . . . . . . . .    27\\ 
+4.4   Boundary Value Analysis Test Cases . . . . . . . . . . . . . . . . . . . . . .       27\\ 
+4.5   Decision Table Test Scenarios . . . . . . . . . . . . . . . . . . . . . . . . . .    27\\ 
+
+\smallskip
+5.1   Automation Testing Environment . . . . . . . . . . . . . . . . . . . . . . . .       29\\ 
+5.7   Summary of Selected Automation Test Cases . . . . . . . . . . . . . . . . . .        38\\ 
+
+\smallskip
+7.1   Defect Report for BUG001 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     52\\ 
+7.2   Defect Report for BUG002 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     53\\ 
+7.3   Defect Report for BUG003 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     54\\ 
+7.4   Defect Report for BUG004 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     55\\ 
+7.5   Defect Report for BUG005 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     56\\ 
+7.6   Defect Report for BUG006 . . . . . . . . . . . . . . . . . . . . . . . . . . . .     57\\ 
+
+\smallskip
+8.1   Summary of Test Execution . . . . . . . . . . . . . . . . . . . . . . . . . . .      58\\ 
+8.2   Pass and Fail Percentage . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   59\\ 
+8.3   Overall Test Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   61\\ 
+
+\clearpage
+\section*{Extracted Source Page 9}
+LIST OF FIGURES\\ 
+
+\smallskip
+1.1 SpendWise Login Module . . . . . . . . . . . . . . . . . . . . . . . . . . . .       12\\ 
+1.2 SpendWise User Registration Module . . . . . . . . . . . . . . . . . . . . . .       12\\ 
+1.3 SpendWise Income Management Module . . . . . . . . . . . . . . . . . . . .           13\\ 
+1.4 SpendWise Expense Management Module . . . . . . . . . . . . . . . . . . .            13\\ 
+1.5 SpendWise Budget Management Module . . . . . . . . . . . . . . . . . . . .           14\\ 
+1.6 SpendWise Transaction Management Module . . . . . . . . . . . . . . . . .            14\\ 
+1.7 SpendWise Dashboard Module . . . . . . . . . . . . . . . . . . . . . . . . . .       15\\ 
+1.8 SpendWise Reports Module . . . . . . . . . . . . . . . . . . . . . . . . . . .       15\\ 
+1.9 SpendWise Logout Functionality . . . . . . . . . . . . . . . . . . . . . . . .       15\\ 
+1.10 SpendWise Profile and Settings Module . . . . . . . . . . . . . . . . . . . . .     16\\ 
+1.11 SpendWise Account Deletion Functionality . . . . . . . . . . . . . . . . . . .      16\\ 
+
+\smallskip
+2.1   Simplified SpendWise Application Flow . . . . . . . . . . . . . . . . . . . . .    19\\ 
+
+\smallskip
+5.1 AT-01: Registration Form with Empty Fields . . . . . . . . . . . . . . . . .         30\\ 
+5.2 AT-01: Required-Field Validation Message . . . . . . . . . . . . . . . . . . .       31\\ 
+5.3 AT-01: Automated Test Result in the Terminal . . . . . . . . . . . . . . . .         31\\ 
+5.4 AT-02: Registration with Mismatched Passwords . . . . . . . . . . . . . . .          32\\ 
+5.5 AT-02: Password-Mismatch Validation Message . . . . . . . . . . . . . . . .          33\\ 
+5.6 AT-02: Automated Test Result in the Terminal . . . . . . . . . . . . . . . .         33\\ 
+5.7 AT-03: Zero Entered in the Expense Form . . . . . . . . . . . . . . . . . . .        34\\ 
+5.8 AT-03: Zero-Value Expense Accepted by the Application . . . . . . . . . . .          35\\ 
+5.9 AT-03: Automated Test Result in the Terminal . . . . . . . . . . . . . . . .         35\\ 
+5.10 AT-04: Logout Button Before the Operation . . . . . . . . . . . . . . . . . .       36\\ 
+5.11 AT-04: Dashboard Displayed After Clicking Logout . . . . . . . . . . . . . .        36\\ 
+5.12 AT-04: Automated Test Result in the Terminal . . . . . . . . . . . . . . . .        36\\ 
+5.13 AT-05: Negative Budget Entered in the Form . . . . . . . . . . . . . . . . .        37\\ 
+5.14 AT-05: Negative Budget Accepted by the Application . . . . . . . . . . . . .        38\\ 
+5.15 AT-05: Automated Test Result in the Terminal . . . . . . . . . . . . . . . .        38\\ 
+
+\smallskip
+6.1   Google Gemini: AI-Assisted Test Case Generation . . . . . . . . . . . . . . .      41\\ 
+6.2   Claude: Review of Test Scenarios . . . . . . . . . . . . . . . . . . . . . . . .   42\\ 
+6.3   Google NotebookLM: Risk and Defect Analysis . . . . . . . . . . . . . . . .        43\\ 
+6.4   AI-01: Decimal Amount Entered in Expense Fields . . . . . . . . . . . . . .        45\\ 
+6.5   AI-01: Decimal Amount Displayed in Transaction List . . . . . . . . . . . .        45\\ 
+6.6   AI-02: Transactions Filtered by Income . . . . . . . . . . . . . . . . . . . . .   46\\ 
+
+\clearpage
+\section*{Extracted Source Page 10}
+6.7 AI-03: Existing Food Budget Message Displayed . . . . . . . . . . . . . . . .       47\\ 
+6.8 AI-04: Delete Button for the Selected Expense . . . . . . . . . . . . . . . . .     48\\ 
+6.9 AI-04: Expense Still Visible After Delete Attempt . . . . . . . . . . . . . . .     48\\ 
+6.10 AI-05: Transaction Search by Description . . . . . . . . . . . . . . . . . . . .   49\\ 
+
+\smallskip
+A.1 Working on the Software Testing Mini Project . . . . . . . . . . . . . . . . .      65\\ 
+
+\clearpage
+\section*{Extracted Source Page 11}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 1\\ 
+INTRODUCTION\\ 
+
+\smallskip
+
+\smallskip
+1.1 Background\\ 
+
+\smallskip
+Software testing is an important part of the Software Development Life Cycle (SDLC). It\\ 
+is the process of evaluating a software application to identify defects and verify whether it\\ 
+meets the specified requirements. Software testing helps improve software quality, reliability,\\ 
+usability, and correctness by detecting problems and verifying application behavior under\\ 
+different conditions.\\ 
+SpendWise is a personal finance management application that provides features for man-\\ 
+aging income, expenses, budgets, and financial transactions. Since financial information\\ 
+must be recorded, processed, and displayed accurately, systematic testing is necessary to\\ 
+verify input validation, transaction management, budget operations, balance calculations,\\ 
+and interactions between different application modules.\\ 
+This project focuses on Software Testing and Quality Assurance (STQA) of the SpendWise\\ 
+application. Manual testing, selected automation tests, and AI-assisted testing techniques\\ 
+are used to evaluate application functionality, identify defects, record test results, and assess\\ 
+the overall quality of the application.\\ 
+
+\smallskip
+
+\smallskip
+1.2 Problem Statement\\ 
+
+\smallskip
+The objective of this project is to evaluate the functional correctness and reliability of the\\ 
+SpendWise personal finance management application using manual, automation, and AI-\\ 
+assisted testing techniques. The testing activities focus on the application’s major func-\\ 
+tionalities, including login, registration, income and expense management, budget planning,\\ 
+transaction history, reports, profile settings, and logout.\\ 
+The testing process aims to identify functional defects, input validation issues, incorrect\\ 
+transaction handling, calculation errors, and unexpected application behavior. Test cases\\ 
+are designed and executed using different input conditions, and the observed results are\\ 
+compared with the expected results. The identified defects are documented through test\\ 
+results and defect reports to assess the application’s quality and highlight areas requiring\\ 
+improvement.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 10 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 12}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+1.3 Objectives\\ 
+
+\smallskip
+The main objectives of the SpendWise STQA project are:\\ 
+
+\smallskip
+
+\smallskip
+• To understand the functional requirements and major modules of the SpendWise ap-\\ 
+plication from a testing perspective.\\ 
+
+\smallskip
+• To design and execute manual test cases for the application’s key functionalities.\\ 
+
+\smallskip
+• To perform functional testing, boundary value analysis, equivalence partitioning, and\\ 
+other relevant testing techniques.\\ 
+
+\smallskip
+• To automate selected test cases using Selenium WebDriver and pytest.\\ 
+
+\smallskip
+• To identify, record, and document defects discovered during testing.\\ 
+
+\smallskip
+• To evaluate input validation for invalid, empty, zero, negative, and excessively large\\ 
+input values.\\ 
+
+\smallskip
+• To compare manual testing observations with automation testing results.\\ 
+
+\smallskip
+• To evaluate the application’s behavior across different modules and input conditions.\\ 
+
+\smallskip
+• To identify areas requiring improvement based on the testing results.\\ 
+
+\smallskip
+
+\smallskip
+1.4 Scope of the Project\\ 
+
+\smallskip
+The scope of this project is limited to testing the main functionalities of the SpendWise\\ 
+personal finance management application. Manual testing, selected Selenium automation\\ 
+tests, and AI-assisted test design are used to examine the application’s behavior under\\ 
+different input conditions and user operations.\\ 
+The testing covers important modules such as user login, registration, income and expense\\ 
+management, budget planning, transaction handling, dashboard, reports, profile settings,\\ 
+logout, and account deletion. Each module is examined through relevant test scenarios to\\ 
+verify whether its functions work as expected. The project also includes test case execution,\\ 
+result analysis, defect identification, and documentation to provide an overall assessment of\\ 
+the application’s quality and reliability.\\ 
+The following modules are included in the testing scope:\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 11 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 13}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+1. Login: Verify login form visibility, empty-field validation, valid login behavior, and\\ 
+rejection of invalid credentials.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.1: SpendWise Login Module\\ 
+
+\smallskip
+
+\smallskip
+2. User Registration: Verify registration form visibility, required-field validation, in-\\ 
+valid email handling, password validation, and registration behavior.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.2: SpendWise User Registration Module\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                    Page 12 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 14}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+3. Income Management: Verify income entry, saving of income records, required-field\\ 
+validation, and handling of invalid or zero income values according to the application’s\\ 
+validation rules.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.3: SpendWise Income Management Module\\ 
+
+\smallskip
+
+\smallskip
+4. Expense Management: Verify expense creation, required-field validation, negative\\ 
+and zero amount handling, and validation of excessively large amounts.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.4: SpendWise Expense Management Module\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 13 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 15}
+230102103008                     SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+5. Budget Management: Verify budget creation, editing, deletion, duplicate budget\\ 
+handling, and validation of invalid budget values.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.5: SpendWise Budget Management Module\\ 
+
+\smallskip
+
+\smallskip
+6. Transaction Management: Verify transaction history, income and expense filters,\\ 
+description search, transaction editing, and transaction deletion.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.6: SpendWise Transaction Management Module\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                               Page 14 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 16}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+7. Dashboard: Verify dashboard loading, transaction summaries, and remaining balance\\ 
+calculations.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.7: SpendWise Dashboard Module\\ 
+
+\smallskip
+
+\smallskip
+8. Reports: Verify that the reports page opens and displays transaction or financial\\ 
+history as expected.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.8: SpendWise Reports Module\\ 
+
+\smallskip
+
+\smallskip
+9. Logout: Verify that logging out ends the user’s session and returns the application to\\ 
+the login page.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.9: SpendWise Logout Functionality\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                    Page 15 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 17}
+230102103008                       SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+10. Profile and Settings: Verify profile page access and whether updated profile infor-\\ 
+mation is displayed correctly.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.10: SpendWise Profile and Settings Module\\ 
+
+\smallskip
+
+\smallskip
+11. Account Deletion: Verify the account deletion workflow and the application’s re-\\ 
+sponse after the user confirms deletion.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 1.11: SpendWise Account Deletion Functionality\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                  Page 16 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 18}
+230102103008                             SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 2\\ 
+
+\smallskip
+SOFTWARE/APPLICATION UNDER TEST\\ 
+
+\smallskip
+
+\smallskip
+2.1 Application Overview\\ 
+
+\smallskip
+SpendWise is a personal finance management application that helps users record and man-\\ 
+age their income, expenses, budgets, and financial transactions. The application provides\\ 
+features that allow users to monitor their financial activities and review financial summaries\\ 
+through a dashboard and reports.\\ 
+
+\smallskip
+
+\smallskip
+2.2 Functional Requirements of SpendWise\\ 
+
+\smallskip
+The functional requirements of SpendWise describe the main features and operations that\\ 
+the system is expected to support.\\ 
+
+\smallskip
+Requirement ID            Requirement\\ 
+
+\smallskip
+FR01                      The system shall allow registered users to log in using valid cre-\\ 
+dentials.\\ 
+
+\smallskip
+FR02                      The system shall allow new users to register by providing the\\ 
+required details.\\ 
+
+\smallskip
+FR03                      The system shall validate required fields and reject invalid input.\\ 
+
+\smallskip
+FR04                      The system shall allow users to add income records.\\ 
+
+\smallskip
+FR05                      The system shall allow users to record expenses with details such\\ 
+as amount, category, and description.\\ 
+
+\smallskip
+FR06                      The system shall reject invalid expense amounts, including neg-\\ 
+ative values.\\ 
+
+\smallskip
+FR07                      The system shall allow users to create and manage budgets.\\ 
+
+\smallskip
+FR08                      The system shall prevent duplicate budgets where applicable.\\ 
+
+\smallskip
+FR09                      The system shall display transaction history for recorded income\\ 
+and expenses.\\ 
+
+\smallskip
+FR10                      The system shall allow users to search and filter transactions.\\ 
+
+\smallskip
+FR11                      The system shall allow users to edit or delete transactions.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                           Page 17 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 19}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Requirement ID            Requirement\\ 
+
+\smallskip
+FR12                      The system shall display financial summaries on the dashboard.\\ 
+
+\smallskip
+FR13                      The system shall provide reports based on recorded financial\\ 
+data.\\ 
+
+\smallskip
+FR14                      The system shall allow users to update profile information.\\ 
+
+\smallskip
+FR15                      The system shall allow users to log out of the application.\\ 
+
+\smallskip
+FR16                      The system shall provide an option to delete the user account.\\ 
+
+\smallskip
+Table 2.1: Functional Requirements of SpendWise\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+2.3 Non-Functional Requirements\\ 
+
+\smallskip
+• Performance: The application should load pages and process user actions within a\\ 
+reasonable time under normal operating conditions.\\ 
+
+\smallskip
+• Security: The application should protect user accounts and financial information,\\ 
+validate user input, and restrict access to authenticated features where required.\\ 
+
+\smallskip
+• Usability: The interface should be understandable and easy to navigate. Forms,\\ 
+buttons, menus, and validation messages should help users complete tasks correctly.\\ 
+
+\smallskip
+• Reliability: The application should handle financial transactions consistently and\\ 
+display accurate information without unexpected errors or data inconsistencies.\\ 
+
+\smallskip
+• Compatibility: The application should function correctly in the supported web\\ 
+browsers and screen configurations specified for the application.\\ 
+
+\smallskip
+
+\smallskip
+2.4 System Architecture / Application Flow\\ 
+
+\smallskip
+SpendWise follows a web application workflow in which users interact with the interface, sub-\\ 
+mit requests, and view information returned by the application. The application processes\\ 
+authentication and financial operations and presents the resulting information through its\\ 
+pages.\\ 
+The flow begins when a user opens SpendWise and enters login credentials. The application\\ 
+validates the entered information before granting access to the system. If the credentials\\ 
+are valid, the user is redirected to the dashboard, where an overview of financial activities\\ 
+is available. If the credentials are invalid, an appropriate error or validation message is\\ 
+expected, allowing the user to review the entered details and try again.\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 18 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 20}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 2.1: Simplified SpendWise Application Flow\\ 
+
+\smallskip
+
+\smallskip
+The diagram represents a simplified logical user flow of SpendWise, illustrating the major\\ 
+activities available to a user from login to the completion of a session. It is intended to\\ 
+support the understanding and testing of user-facing functionality rather than describe the\\ 
+verified internal architecture or backend implementation of the application.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                    Page 19 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 21}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 3\\ 
+
+\smallskip
+SOFTWARE TESTING METHODOLOGY\\ 
+
+\smallskip
+
+\smallskip
+3.1 Testing Process\\ 
+
+\smallskip
+The testing of the SpendWise application followed a structured workflow to evaluate its func-\\ 
+tional behaviour and document observed issues. The process combined requirement analysis,\\ 
+test design, manual execution, automation, AI-assisted support, and defect documentation.\\ 
+The activities were connected so that test results could be compared with expected behaviour\\ 
+and issues requiring further investigation could be identified.\\ 
+
+\smallskip
+
+\smallskip
+3.1.1 Overview of the Testing Workflow\\ 
+
+\smallskip
+The major activities performed during testing are summarised in Table 3.1.\\ 
+
+\smallskip
+No.      Activity                   Purpose\\ 
+1        Requirement Review         Identify the main application modules and under-\\ 
+stand their expected behaviour.\\ 
+2        Test Design                Prepare test scenarios covering valid inputs, invalid\\ 
+inputs, boundary values, and important user oper-\\ 
+ations.\\ 
+3        Manual Execution           Interact with the application and compare actual\\ 
+behaviour with expected results.\\ 
+4        Automated Execution        Use Selenium WebDriver and pytest to execute se-\\ 
+lected test scenarios.\\ 
+5        AI-Assisted Analysis       Use ChatGPT to suggest additional test cases and\\ 
+help interpret selected testing observations.\\ 
+6        Result Evaluation          Review test outcomes and distinguish confirmed ap-\\ 
+plication issues from possible script or locator prob-\\ 
+lems.\\ 
+7        Defect Documentation       Record relevant issues with their descriptions,\\ 
+expected results, actual results, and supporting\\ 
+screenshots.\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 20 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 22}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+No.      Activity                     Purpose\\ 
+8        Final Reporting              Organise the recorded results and summarise the\\ 
+testing activities and issues requiring further inves-\\ 
+tigation.\\ 
+
+\smallskip
+Table 3.1: Testing Workflow Followed for SpendWise\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+3.2 Types of Testing Used\\ 
+
+\smallskip
+Different testing techniques were used to evaluate the SpendWise application. The tech-\\ 
+niques were selected based on the application modules, available test cases, and scenarios\\ 
+executed during the project.\\ 
+
+\smallskip
+Testing Type                    Description\\ 
+
+\smallskip
+Unit Testing                    Tested individual functions and components to verify that\\ 
+they work as expected.\\ 
+
+\smallskip
+Functional Testing              Verified the main application features against expected re-\\ 
+quirements.\\ 
+
+\smallskip
+System Testing                  Checked complete user operations and navigation between\\ 
+modules.\\ 
+
+\smallskip
+Boundary Value Analysis         Tested boundary inputs such as zero, negative, and large\\ 
+amounts.\\ 
+
+\smallskip
+Equivalence Partitioning        Grouped valid and invalid inputs and tested representative\\ 
+values.\\ 
+
+\smallskip
+Usability Testing               Checked basic page accessibility, forms, validation messages,\\ 
+and navigation.\\ 
+
+\smallskip
+Table 3.2: Types of Testing Used in SpendWise\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 21 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 23}
+230102103008                            SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 4\\ 
+
+\smallskip
+MANUAL TESTING\\ 
+
+\smallskip
+4.1 Test Case Design\\ 
+
+\smallskip
+Manual testing was performed on the SpendWise personal finance application to evaluate\\ 
+its main functionalities, including registration, login, income, expenses, budget planning,\\ 
+transaction management, dashboard, reports, profile settings, logout, and account deletion.\\ 
+Criteria for passward : The password must contain at least 8 characters, including at least\\ 
+one letter and one number. Including a special character is optional.\\ 
+
+\smallskip
+Test Case Test Scenario Input Value            Expected Result Actual Result             Status\\ 
+ID\\ 
+TC-01      Open            Click Register      Registration page   Registration page     Pass\\ 
+registration                        opens               opened successfully\\ 
+page\\ 
+TC-02      Register a new Example: Test User Registration          Error reading full    Fail\\ 
+account         testuser@gmail.com completes without name from\\ 
+Test@123            errors              undefined\\ 
+TC-03      Login with      Email: tes-         Dashboard opens     Dashboard             Fail\\ 
+valid           tuser@gmail.com                         returned a “Not\\ 
+credentials     Password:                               Found” error\\ 
+Test@123\\ 
+TC-04      Load            Email: tes-         Dashboard data      Integer expected,     Fail\\ 
+dashboard       tuser@gmail.com     loads without       but a string was\\ 
+data after login Password:          input errors        passed\\ 
+Test@123\\ 
+TC-05      Create an       Name: Test User     Account is created Account creation       Fail\\ 
+account with    Email: tes-         and login page      failed; error\\ 
+valid details   tuser@gmail.com     opens               reading split from\\ 
+Password:                               undefined\\ 
+Test@123\\ 
+TC-06      Login with      Registered email:   Dashboard is        Dashboard             Pass\\ 
+valid           tes-                displayed           displayed\\ 
+credentials     tuser@gmail.com                         successfully\\ 
+Password:\\ 
+Test@123\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                           Page 22 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 24}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Test Case Test Scenario Input Value             Expected Result Actual Result             Status\\ 
+ID\\ 
+TC-07     Add income      Amount: 25,000        Income is saved     Income was added Pass\\ 
+Source: Salary                            successfully\\ 
+Description:\\ 
+October test salary\\ 
+Date: Today\\ 
+TC-08     Add an          Amount: 1,500         Expense is saved    Expense was added Pass\\ 
+expense         Category: Food                            successfully\\ 
+Description:\\ 
+Grocery shopping\\ 
+test\\ 
+Payment: UPI\\ 
+Date: Today\\ 
+TC-09     Enter negative Amount: -500           Negative amount is Validation             Pass\\ 
+expense                               rejected            appeared and\\ 
+amount was\\ 
+rejected\\ 
+TC-10     Enter zero      Amount: 0             Zero amount is      Zero amount was       Pass\\ 
+expense                               rejected            not accepted\\ 
+TC-11     Submit empty Amount: Empty            Validation prevents Empty fields were     Pass\\ 
+expense form    Category: Empty       submission          not accepted\\ 
+Description:\\ 
+Empty\\ 
+TC-12     Create a        Category: Food        Budget is created   Budget was created Pass\\ 
+budget          Amount: 5,000                             successfully\\ 
+Month: October\\ 
+2026\\ 
+TC-13     Edit an         Category: Food        Changes are saved Budget was              Pass\\ 
+existing budget Old amount: 5,000                         updated\\ 
+New amount: 6,000                         successfully\\ 
+TC-14     Delete an       Select Food budget Budget is removed Budget was deleted Pass\\ 
+existing budget Click Delete                              successfully\\ 
+TC-15     Open            Click Transaction     Transactions are    Transaction history Pass\\ 
+transaction     History               displayed           displayed\\ 
+history                                                   successfully\\ 
+TC-16     Filter income   Select Income filter Only income          Income filter         Pass\\ 
+transactions                          transactions appear worked correctly\\ 
+TC-17     Filter expense Select Expense         Only expense        Expense filter        Pass\\ 
+transactions    filter                transactions appear worked correctly\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                            Page 23 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 25}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Test Case Test Scenario Input Value          Expected Result Actual Result               Status\\ 
+ID\\ 
+TC-18     Search by       Search text: Salary Matching             Description search Pass\\ 
+description                        transactions appear worked in the\\ 
+tested case\\ 
+TC-19     Edit a          Description:       Changes are saved Input validation          Fail\\ 
+transaction     Updated grocery                          error: input should\\ 
+expense                                  be none\\ 
+Amount: 1,700\\ 
+TC-20     Delete a        Select grocery     Deleted record        Deletion message      Fail\\ 
+transaction     expense of 1,500   disappears            appeared, but\\ 
+Click Delete                             record remained\\ 
+visible\\ 
+TC-21     Update          Old amount: 1,500 Dashboard reflects Dashboard                 Pass\\ 
+transaction     New amount: 1,800 the change             reflected the\\ 
+and check                                                transaction change\\ 
+dashboard\\ 
+TC-22     Open Reports    Click Reports      Reports and           Reports opened        Pass\\ 
+page                               history are visible   and history was\\ 
+visible\\ 
+TC-23     Open Profile    Click Profile or   Settings page opens Page opened             Pass\\ 
+and Settings    Settings                                 successfully\\ 
+TC-24     Logout          Click Logout       User is logged out    Logout worked         Pass\\ 
+successfully\\ 
+TC-25     Register with   Email: testemail   Email is rejected     Invalid email         Pass\\ 
+invalid email                                            message appeared\\ 
+TC-26     Submit empty Name: Empty           Required-field        Required fields       Pass\\ 
+registration    Email: Empty       validation appears were highlighted\\ 
+form            Password: Empty\\ 
+TC-27     Register with   Name: Test User    Account is created Dashboard opened Pass\\ 
+valid details   Email:             and dashboard         successfully\\ 
+newuser@gmail.com opens\\ 
+Password:\\ 
+Test@123\\ 
+TC-28     Login with      Email: wrongemail Login is rejected      Invalid email         Pass\\ 
+invalid email   Password:                                message appeared\\ 
+Test@123\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                           Page 24 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 26}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Test Case Test Scenario Input Value           Expected Result Actual Result             Status\\ 
+ID\\ 
+TC-29     Login with      Email: tes-         Login is rejected   Login was rejected Pass\\ 
+incorrect       tuser@gmail.com                         successfully\\ 
+password        Password:\\ 
+Wrong@123\\ 
+TC-30     Submit empty Email: Empty           Validation prevents Empty fields were     Pass\\ 
+login form      Password: Empty     login               rejected\\ 
+TC-31     Enter           Amount:             System rejects the Error indicated        Pass\\ 
+excessively     999999999999        amount              that the amount\\ 
+large expense                                           exceeded the limit\\ 
+TC-32     Create          Category: Food      Duplicate budget is Message stated        Pass\\ 
+duplicate       Amount: 5,000       prevented           that the Food\\ 
+budget          Month: October                          budget already\\ 
+2026                                    exists and can be\\ 
+Repeat same                             edited\\ 
+category and\\ 
+month\\ 
+TC-33     Save a valid    Category: Food      Budget is saved     Internal server       Fail\\ 
+budget          Amount: 5,000                           error; budget could\\ 
+Month: October                          not be saved\\ 
+2026\\ 
+TC-34     Change profile New name: Test       Updated name is     Previous name         Fail\\ 
+name            User Updated        displayed           remained displayed\\ 
+Click Save\\ 
+TC-35     Check           Income: 25,000      Balance is          Remaining balance Fail\\ 
+remaining       Expenses: 1,500     calculated correctly was incorrect\\ 
+balance         Expected balance:\\ 
+23,500\\ 
+TC-36     Add Shopping Category:              Transaction         Transaction           Fail\\ 
+expense         Shopping            displays Shopping   displayed Food\\ 
+Amount: 500                             instead\\ 
+TC-37     Search          Search text:        Matching            No matching           Fail\\ 
+transactions    “groceries          transactions appear transactions were\\ 
+shopping”                               displayed\\ 
+TC-38     Filter          Select October      Only October        Transactions from     Fail\\ 
+transactions by 2026                transactions appear all months were\\ 
+month                                                   displayed\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 25 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 27}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Test Case Test Scenario Input Value            Expected Result Actual Result                 Status\\ 
+ID\\ 
+TC-39       Delete user     Open account       Account is deleted Account deletion           Pass\\ 
+account         settings                                   worked successfully\\ 
+Click Delete\\ 
+Account\\ 
+Confirm deletion\\ 
+
+\smallskip
+Table 4.1: Manual Test Cases for the SpendWise Application\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+4.1.1 Test Case Execution Summary\\ 
+
+\smallskip
+The recorded results for the 39 test cases are summarized below.\\ 
+
+\smallskip
+Test Result                      Number of Cases\\ 
+Pass                                          27\\ 
+Fail                                          12\\ 
+Total                                         39\\ 
+
+\smallskip
+Table 4.2: Summary of Manual Test Results\\ 
+
+\smallskip
+
+\smallskip
+The recorded fail cases require further investigation and correction.\\ 
+
+\smallskip
+
+\smallskip
+4.2 Test Case Techniques\\ 
+
+\smallskip
+The following test design techniques were used to organize test scenarios and consider valid\\ 
+inputs, invalid inputs, boundary values, and potential application errors.\\ 
+
+\smallskip
+
+\smallskip
+4.2.1 Equivalence Partitioning\\ 
+
+\smallskip
+Equivalence Partitioning divides input data into groups expected to behave similarly. Rep-\\ 
+resentative valid and invalid inputs are selected from these groups.\\ 
+
+\smallskip
+Technique Input Field          Input Class        Expected Behaviour                Reference\\ 
+ID\\ 
+EP-01       Login credentials Valid credentials   User can log in                   TC-06\\ 
+EP-02       Login credentials Invalid credentials Login is rejected                 TC-28, TC-\\ 
+29\\ 
+EP-03       Expense amount     Negative or zero Invalid amount is rejected          TC-09, TC-\\ 
+amount                                               10\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                           Page 26 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 28}
+230102103008                               SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Technique Input Field             Input Class             Expected Behaviour            Reference\\ 
+ID\\ 
+EP-04       Registration          Required        fields Validation is displayed        TC-26\\ 
+fields                empty\\ 
+
+\smallskip
+Table 4.3: Equivalence Partitioning Test Cases\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+4.2.2 Boundary Value Analysis\\ 
+
+\smallskip
+Boundary Value Analysis focuses on values at or near input limits. For SpendWise, amount\\ 
+validation scenarios included negative, zero, positive, and excessively large expense amounts.\\ 
+
+\smallskip
+Technique Input Field             Boundary Value Expected Behaviour                     Reference\\ 
+ID\\ 
+BVA-01      Expense amount        Negative amount         System rejects the amount     TC-09\\ 
+BVA-02      Expense amount        Zero                    System rejects zero           TC-10\\ 
+BVA-03      Expense amount        Valid         positive System accepts valid input     TC-08\\ 
+amount\\ 
+BVA-04      Expense amount        Excessively     large System enforces the amount TC-31\\ 
+amount                  limit\\ 
+
+\smallskip
+Table 4.4: Boundary Value Analysis Test Cases\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+4.2.3 Decision Table Testing\\ 
+
+\smallskip
+Decision Table Testing considers combinations of conditions and their expected system ac-\\ 
+tions. It is useful for validating login, required fields, and duplicate budget handling.\\ 
+
+\smallskip
+Rule ID Condition                        Input Situation           Expected Action\\ 
+D-01       Valid credentials             Registered email and Allow login\\ 
+correct password\\ 
+D-02       Invalid credentials           Incorrect password or Reject login and display valida-\\ 
+invalid email             tion\\ 
+D-03       Required fields missing One or more fields are Prevent submission and show\\ 
+empty                     validation\\ 
+D-04       Budget already exists         Same category and date Prevent duplicate budget cre-\\ 
+entered again             ation\\ 
+
+\smallskip
+Table 4.5: Decision Table Test Scenarios\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                                Page 27 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 29}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+4.3 Summary\\ 
+
+\smallskip
+This chapter presented the manual testing process carried out for the SpendWise personal\\ 
+finance application. Testing covered major modules, including registration, login, income\\ 
+and expense management, budget planning, transaction history, dashboard, reports, profile\\ 
+settings, logout, and account deletion. A total of 39 test cases were prepared and docu-\\ 
+mented, of which 27 passed and 12 failed according to the recorded results. Each test case\\ 
+included the test scenario, input value, expected result, actual result, and status.\\ 
+Overall, manual testing helped identify differences between the expected and observed be-\\ 
+haviour of the SpendWise application. The documented test cases and results provide a\\ 
+foundation for defect reporting, corrective action, retesting, and future regression testing.\\ 
+The findings also emphasize the importance of accurate financial calculations, consistent\\ 
+transaction records, reliable input validation, and correct filtering. Addressing the identified\\ 
+issues can help improve the application’s functionality, reliability, and overall user experi-\\ 
+ence.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 28 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 30}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 5\\ 
+
+\smallskip
+AUTOMATION TESTING\\ 
+
+\smallskip
+Automation testing was performed on selected functionalities of the SpendWise personal\\ 
+finance application using Selenium WebDriver and Python. The purpose was to automate\\ 
+repetitive test scenarios, verify user interface behaviour, and identify issues during applica-\\ 
+tion testing. The Pytest framework was used to organize and execute the automated test\\ 
+scripts.\\ 
+
+\smallskip
+
+\smallskip
+5.1 Automation Tool\\ 
+
+\smallskip
+The tools used are described below:\\ 
+
+\smallskip
+• Selenium WebDriver: Automates browser interactions.\\ 
+
+\smallskip
+• Python: Used to write automation scripts.\\ 
+
+\smallskip
+• Pytest: Executes test functions and reports results.\\ 
+
+\smallskip
+• Google Chrome: Browser used for web application testing.\\ 
+
+\smallskip
+
+\smallskip
+5.2 Automation Environment\\ 
+
+\smallskip
+The automation environment consisted of the programming language, browser automation\\ 
+framework, testing framework, browser, operating system, and code editor used during de-\\ 
+velopment and execution.\\ 
+
+\smallskip
+Component                          Details\\ 
+Programming Language               Python\\ 
+Automation Tool                    Selenium WebDriver\\ 
+Testing Framework                  Pytest\\ 
+Browser                            Google Chrome\\ 
+Operating System                   Windows\\ 
+IDE / Code Editor                  Visual Studio Code\\ 
+Application Under Test             SpendWise personal finance application\\ 
+
+\smallskip
+Table 5.1: Automation Testing Environment\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                        Page 29 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 31}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+5.3 Automated Test Cases\\ 
+
+\smallskip
+Five test cases were selected from the SpendWise automation test suite for detailed reporting.\\ 
+Each test case documents its identifier, scenario, input values, expected result, actual result,\\ 
+execution status, priority, and severity.\\ 
+
+\smallskip
+
+\smallskip
+5.3.1 AT-01: Submit Registration Form with Empty Fields\\ 
+
+\smallskip
+
+\smallskip
+Field                    Details\\ 
+Test Case ID             AT-01\\ 
+Test Scenario            Submit the registration form with all fields empty.\\ 
+Input Value              Name, email, password, and confirm-password fields left empty.\\ 
+Expected Result          The application should prevent registration and display the\\ 
+appropriate required-field validation messages.\\ 
+Actual Result            The registration form.\\ 
+Pass/Fail                Pass\\ 
+Priority                 High\\ 
+Severity                 Low\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.1: AT-01: Registration Form with Empty Fields\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 30 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 32}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.2: AT-01: Required-Field Validation Message\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.3: AT-01: Automated Test Result in the Terminal\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+5.3.2 AT-02: Validate Password Mismatch During Registration\\ 
+
+\smallskip
+
+\smallskip
+Field                   Details\\ 
+Test Case ID            AT-02\\ 
+Test Scenario           Validate registration when the password and confirm-password\\ 
+values do not match.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                     Page 31 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 33}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+Input Value              Password: Test@12345; confirm password: Test@54321. The\\ 
+remaining required registration fields contain valid values.\\ 
+Expected Result          Registration should be prevented and an appropriate\\ 
+password-mismatch validation message should be displayed.\\ 
+Actual Result            The application rejected the registration because the password and\\ 
+confirm password did not match, and the test passed.\\ 
+Pass/Fail                Pass\\ 
+Priority                 High\\ 
+Severity                 Medium\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.4: AT-02: Registration with Mismatched Passwords\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 32 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 34}
+230102103008                      SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.5: AT-02: Password-Mismatch Validation Message\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.6: AT-02: Automated Test Result in the Terminal\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                   Page 33 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 35}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+5.3.3 AT-03: Zero-Expense Validation\\ 
+
+\smallskip
+
+\smallskip
+Field                   Details\\ 
+Test Case ID            AT-03\\ 
+Test Scenario           Verify expense validation when the entered amount is zero.\\ 
+Input Value             Expense amount: 0.\\ 
+Expected Result         The application should reject the zero amount if positive expense\\ 
+values are required and display an appropriate validation message.\\ 
+Actual Result           The application accepted the zero expense amount, and a\\ 
+zero-value expense was visible. The test failed because the observed\\ 
+result did not match the expected result.\\ 
+Pass/Fail               Fail\\ 
+Priority                High\\ 
+Severity                Medium\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.7: AT-03: Zero Entered in the Expense Form\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 34 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 36}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.8: AT-03: Zero-Value Expense Accepted by the Application\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.9: AT-03: Automated Test Result in the Terminal\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+5.3.4 AT-04: Verify Logout Functionality\\ 
+
+\smallskip
+
+\smallskip
+Field                    Details\\ 
+Test Case ID             AT-04\\ 
+Test Scenario            Verify that the user is logged out and redirected to the login page.\\ 
+Input Value              An authenticated user clicks the Logout button.\\ 
+Expected Result          The user should be logged out and redirected to the login page.\\ 
+Protected pages should not remain accessible without\\ 
+authentication.\\ 
+Actual Result            The dashboard appeared after the Logout button was clicked,\\ 
+instead of the expected login page. The observed behaviour did not\\ 
+match the expected result.\\ 
+Pass/Fail                Fail\\ 
+Priority                 High\\ 
+Severity                 Medium\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 35 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 37}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.10: AT-04: Logout Button Before the Operation\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.11: AT-04: Dashboard Displayed After Clicking Logout\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.12: AT-04: Automated Test Result in the Terminal\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+5.3.5 AT-05: Negative-Budget Validation\\ 
+
+\smallskip
+
+\smallskip
+Field                     Details\\ 
+Test Case ID              AT-05\\ 
+Test Scenario             Verify budget validation when a negative amount is entered.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                        Page 36 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 38}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+Input Value             Budget amount: -500.\\ 
+Expected Result         The application should reject the negative budget amount and\\ 
+display an appropriate validation message.\\ 
+Actual Result           The application accepted the negative budget amount, and the\\ 
+negative value was visible. The observed result did not match the\\ 
+expected result.\\ 
+Pass/Fail               Fail\\ 
+Priority                High\\ 
+Severity                Medium\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.13: AT-05: Negative Budget Entered in the Form\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 37 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 39}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.14: AT-05: Negative Budget Accepted by the Application\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 5.15: AT-05: Automated Test Result in the Terminal\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+5.3.6 Automation Test Summary\\ 
+
+\smallskip
+The five selected automation test cases consisted of two recorded passes and three recorded\\ 
+failures.\\ 
+
+\smallskip
+• Total test cases: 5\\ 
+
+\smallskip
+• Passed test cases: 2\\ 
+
+\smallskip
+• Failed test cases: 3\\ 
+
+\smallskip
+• Pass percentage: 40\%\\ 
+
+\smallskip
+• Fail percentage: 60\%\\ 
+
+\smallskip
+
+\smallskip
+Result Number of Test Cases\\ 
+
+\smallskip
+Pass                2\\ 
+
+\smallskip
+Fail                3\\ 
+
+\smallskip
+Total               5\\ 
+
+\smallskip
+Table 5.7: Summary of Selected Automation Test Cases\\ 
+
+\smallskip
+
+\smallskip
+A failed automation test does not automatically establish that the application contains a\\ 
+defect. The failure may result from application behaviour, an incorrect locator, an unsuitable\\ 
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 38 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 40}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+assertion, or another test-script issue. The failure evidence should therefore be reviewed\\ 
+before classifying an issue as a confirmed application defect.\\ 
+
+\smallskip
+
+\smallskip
+5.4 Summary\\ 
+
+\smallskip
+This chapter described the automation testing approach used for the SpendWise application\\ 
+with Selenium WebDriver, Python, and Pytest. Five selected test cases covered empty\\ 
+registration fields, password mismatch, zero-expense validation, logout functionality, and\\ 
+negative-budget validation. Three screenshots were included for each selected test case to\\ 
+document the input, application response, and terminal result.\\ 
+The recorded results included two passing tests and three failing tests. The empty-registration\\ 
+and password-mismatch tests passed because the application displayed the expected valida-\\ 
+tion behaviour. The zero-expense and negative-budget tests indicated that the application\\ 
+accepted values that were expected to be rejected. The logout test showed the dashboard\\ 
+after the Logout button was clicked; further investigation is needed to confirm whether the\\ 
+user session was actually terminated.\\ 
+Overall, automation testing provided practical experience in writing browser-based test\\ 
+scripts, executing repeatable checks, and reviewing test outcomes. It complements man-\\ 
+ual testing by making selected checks easier to repeat and helping identify scenarios that\\ 
+need additional investigation. Future improvements could include reviewing failed assertions\\ 
+and element locators, checking authentication behaviour after logout, and rerunning tests\\ 
+after any identified issues have been addressed.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 39 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 41}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 6\\ 
+
+\smallskip
+AI-BASED TESTING\\ 
+
+\smallskip
+
+\smallskip
+6.1 Introduction to AI in Software Testing\\ 
+
+\smallskip
+Artificial Intelligence (AI) is increasingly being used in software testing to support test case\\ 
+generation, test scenario analysis, and identification of potential application risks. AI tools\\ 
+can help testers understand application requirements, suggest test scenarios, and identify\\ 
+areas that may require additional testing.\\ 
+In this project, AI tools were used to support the testing of the existing SpendWise personal\\ 
+finance management application. The tools were used to generate test scenarios, review\\ 
+possible test cases, and identify potential risks and defects.\\ 
+The test cases suggested by AI were reviewed and selected based on the functionality of\\ 
+the SpendWise application. The selected scenarios were then checked against the actual\\ 
+application. AI was used as a supporting tool, while the final validation and test results\\ 
+were based on the observed application behaviour.\\ 
+
+\smallskip
+
+\smallskip
+6.2 AI Tools Used\\ 
+
+\smallskip
+Three AI tools were used during this project. Each tool was used for a different purpose in\\ 
+the testing process.\\ 
+
+\smallskip
+
+\smallskip
+6.2.1 Google Gemini\\ 
+
+\smallskip
+Google Gemini was used for AI-assisted test case generation. The project description and\\ 
+main functionalities of SpendWise were provided to Gemini. Based on this information, it\\ 
+suggested test scenarios related to login, expense management, income management, bud-\\ 
+gets, and transaction filtering.\\ 
+Gemini also helped organize the suggested test cases by identifying their expected results\\ 
+and possible input conditions. These suggestions provided a starting point for preparing\\ 
+test cases for both normal and invalid inputs. The generated scenarios were reviewed and\\ 
+selected according to the actual features available in SpendWise before being used in the\\ 
+testing process.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 40 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 42}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.1: Google Gemini: AI-Assisted Test Case Generation\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.2.2 Claude\\ 
+
+\smallskip
+Claude was used to review the test scenarios generated during the testing process. The\\ 
+SpendWise project description was provided as text, and Claude was asked to review the\\ 
+scenarios and suggest additional test conditions that might have been missed.\\ 
+This helped in identifying additional test scenarios and improving the overall test coverage.\\ 
+Claude also helped examine whether the suggested test cases covered the important function-\\ 
+alities of the application. It provided suggestions for checking different user actions, input\\ 
+conditions, and possible application errors. The review helped identify areas where more\\ 
+testing could be useful, such as expense operations, budget management, and transaction\\ 
+handling.\\ 
+The suggestions provided by Claude were compared with the available features of Spend-\\ 
+Wise. Relevant scenarios were selected for further testing, while unrelated suggestions were\\ 
+excluded. This review process helped make the test cases more complete and provided\\ 
+additional support in identifying possible defects in the application.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 41 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 43}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.2: Claude: Review of Test Scenarios\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.2.3 Google NotebookLM\\ 
+
+\smallskip
+Google NotebookLM was used for risk and defect analysis. Information about the SpendWise\\ 
+application and its functionalities was provided to identify areas that could contain possible\\ 
+defects or require additional testing.\\ 
+The analysis focused on areas such as financial calculations, input validation, budget man-\\ 
+agement, and transaction filtering. This helped in understanding potential risks in the\\ 
+application.\\ 
+NotebookLM helped organize the identified risks and provided insights into how incorrect\\ 
+application behaviour could affect users. For example, errors in financial calculations could\\ 
+lead to incorrect income or expense totals, while improper input validation could allow invalid\\ 
+values to be entered. Similarly, problems in budget management or transaction filtering could\\ 
+affect the accuracy and reliability of financial records.\\ 
+The analysis also helped identify important areas that should receive more attention during\\ 
+testing. These suggestions were reviewed and compared with the actual functionalities of\\ 
+SpendWise. Relevant points were considered while selecting test scenarios and evaluating\\ 
+the application.\\ 
+Overall, NotebookLM was useful for understanding possible application risks and supporting\\ 
+the defect analysis process.\\ 
+
+\smallskip
+Jadav Krushi Nayankumar                                                        Page 42 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 44}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.3: Google NotebookLM: Risk and Defect Analysis\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.3 AI-Assisted Test Case Generation\\ 
+
+\smallskip
+AI tools were used to generate and improve test scenarios for the SpendWise application.\\ 
+The application description and its major functionalities were provided to the AI tools to\\ 
+obtain relevant testing suggestions.\\ 
+The generated scenarios were reviewed before selecting the test cases for execution. Only\\ 
+scenarios relevant to the existing application were considered.\\ 
+
+\smallskip
+
+\smallskip
+6.3.1 Example Prompt Used\\ 
+
+\smallskip
+The following prompt was used to generate test scenarios:\\ 
+
+\smallskip
+
+\smallskip
+I am testing an existing personal finance management application called Spend-\\ 
+Wise. The application includes registration, login, income management, expense\\ 
+management, budget management, transaction history, search, and filtering.\\ 
+Generate functional test scenarios for these features. Include positive and neg-\\ 
+ative test cases, input validation, boundary conditions, and possible edge cases.\\ 
+Provide the test scenario, input values, expected result, and priority.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                     Page 43 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 45}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+6.3.2 Use of AI-Generated Suggestions\\ 
+
+\smallskip
+The suggestions provided by the AI tools were treated as references for testing. The gener-\\ 
+ated scenarios were checked against the actual application before being included in the test\\ 
+execution process.\\ 
+AI suggestions helped identify additional test scenarios, including decimal expense amounts,\\ 
+transaction filtering, budget category behaviour, deleting expenses, and searching transac-\\ 
+tions using descriptions.\\ 
+
+\smallskip
+
+\smallskip
+6.4 AI-Assisted Test Cases and Results\\ 
+
+\smallskip
+The following test cases were selected with the assistance of AI tools and checked against the\\ 
+SpendWise application. The actual results were recorded based on the observed behaviour\\ 
+of the application.\\ 
+
+\smallskip
+
+\smallskip
+6.4.1 AI-01: Decimal Amount Validation in Expense\\ 
+
+\smallskip
+
+\smallskip
+Field                   Details\\ 
+Test Case ID            AI-01\\ 
+Test Scenario           Verify whether the application accepts a decimal amount when\\ 
+adding an expense.\\ 
+Input Value             Expense amount: 150.50.\\ 
+Expected Result         The application should accept the decimal amount and successfully\\ 
+save the expense.\\ 
+Actual Result           The application accepted the decimal amount and successfully\\ 
+saved the expense. The decimal value was visible in the main\\ 
+transaction list.\\ 
+Pass/Fail               Pass\\ 
+Priority                Medium\\ 
+Severity                Low\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 44 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 46}
+230102103008                       SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.4: AI-01: Decimal Amount Entered in Expense Fields\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.5: AI-01: Decimal Amount Displayed in Transaction List\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 45 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 47}
+230102103008                       SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+6.4.2 AI-02: Filter Transactions by Income\\ 
+
+\smallskip
+
+\smallskip
+Field                  Details\\ 
+Test Case ID           AI-02\\ 
+Test Scenario          Verify whether the application correctly filters transactions based\\ 
+on the income type.\\ 
+Input Value            Transaction filter: Income.\\ 
+Expected Result        The application should display only income transactions.\\ 
+Actual Result          The application successfully filtered the transactions and displayed\\ 
+the income records.\\ 
+Pass/Fail              Pass\\ 
+Priority               Medium\\ 
+Severity               Low\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.6: AI-02: Transactions Filtered by Income\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.4.3 AI-03: Existing Budget Category Message Validation\\ 
+
+\smallskip
+
+\smallskip
+Field                  Details\\ 
+Test Case ID           AI-03\\ 
+Test Scenario          Verify whether the application displays an appropriate message\\ 
+when an operation is attempted using an existing budget category.\\ 
+Input Value            Category: Food.\\ 
+Amount: 500.\\ 
+Expected Result        The application should display an appropriate message when the\\ 
+existing budget category condition is detected.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 46 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 48}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+Actual Result            The application successfully displayed the message A Food budget\\ 
+already exists.\\ 
+Pass/Fail                Pass\\ 
+Priority                 Medium\\ 
+Severity                 Low\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.7: AI-03: Existing Food Budget Message Displayed\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.4.4 AI-04: Delete Expense Functionality\\ 
+
+\smallskip
+
+\smallskip
+Field                    Details\\ 
+Test Case ID             AI-04\\ 
+Test Scenario            Verify whether the application successfully deletes an existing\\ 
+expense from the transaction list.\\ 
+Input Value              Action: Click the delete button for an existing expense.\\ 
+Expected Result          The selected expense should be deleted and should no longer\\ 
+appear in the transaction list.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 47 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 49}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+Actual Result             After clicking the delete button, the expense was not deleted and\\ 
+remained visible in the transaction list. The observed result did not\\ 
+match the expected result.\\ 
+Pass/Fail                 Fail\\ 
+Priority                  High\\ 
+Severity                  High\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.8: AI-04: Delete Button for the Selected Expense\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.9: AI-04: Expense Still Visible After Delete Attempt\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 48 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 50}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+6.4.5 AI-05: Search Transaction by Description\\ 
+
+\smallskip
+
+\smallskip
+Field                   Details\\ 
+Test Case ID            AI-05\\ 
+Test Scenario           Verify whether the application can search for a transaction using\\ 
+its description.\\ 
+Input Value             Search text: Grocery shopping.\\ 
+Expected Result         The application should display the transaction matching the\\ 
+entered description.\\ 
+Actual Result           The application did not display the expected matching transaction.\\ 
+The observed result did not match the expected result.\\ 
+Pass/Fail               Fail\\ 
+Priority                High\\ 
+Severity                Medium\\ 
+
+\smallskip
+
+\smallskip
+Screenshot\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure 6.10: AI-05: Transaction Search by Description\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+6.5 AI-Based Test Analysis and Risk Identification\\ 
+
+\smallskip
+AI-assisted analysis was used to identify application areas that could require additional\\ 
+testing. The analysis focused on important functionalities of SpendWise where incorrect\\ 
+behaviour could affect the user experience or the accuracy of financial information.\\ 
+The following areas were considered:\\ 
+
+\smallskip
+
+\smallskip
+• Financial Input Validation: Incorrect handling of negative, zero, or decimal amounts\\ 
+could affect the accuracy of financial records.\\ 
+
+\smallskip
+• Budget Management: Incorrect handling of existing budget categories could prevent\\ 
+users from performing expected operations.\\ 
+
+\smallskip
+Jadav Krushi Nayankumar                                                        Page 49 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 51}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+• Transaction Filtering: Incorrect filtering could display irrelevant transactions or\\ 
+hide required records.\\ 
+
+\smallskip
+• Transaction Search: Search functionality may fail to return transactions matching\\ 
+the entered description.\\ 
+
+\smallskip
+• Expense Deletion: Failure to delete an expense could leave unwanted transaction\\ 
+records in the application.\\ 
+
+\smallskip
+• Data Accuracy: Incorrect calculations or transaction updates could result in inac-\\ 
+curate financial information.\\ 
+
+\smallskip
+
+\smallskip
+The AI-assisted analysis helped identify these areas as important testing points. The sug-\\ 
+gested risks were reviewed and compared with the behaviour observed during testing.\\ 
+
+\smallskip
+
+\smallskip
+6.6 Human Validation of AI-Generated Test Cases\\ 
+
+\smallskip
+AI-generated test cases were not accepted directly without review. Each suggested scenario\\ 
+was checked for relevance to the SpendWise application and its available features.\\ 
+The selected test cases were checked against the application, and the actual results were\\ 
+recorded. The final Pass or Fail status was assigned based on the comparison between the\\ 
+expected and observed results.\\ 
+This validation was important because AI tools can suggest test scenarios, but they can-\\ 
+not independently confirm the actual behaviour of the application without execution and\\ 
+verification.\\ 
+Therefore, AI tools were used only as supporting tools in the testing process, while the final\\ 
+testing decisions and results were based on human observation and validation.\\ 
+
+\smallskip
+
+\smallskip
+6.7 Summary\\ 
+
+\smallskip
+AI tools supported different stages of the testing process for the SpendWise application.\\ 
+Google Gemini was used for test case generation, Claude was used for reviewing test scenar-\\ 
+ios, and Google NotebookLM was used for risk and defect analysis.\\ 
+A total of five AI-assisted test cases were considered. Out of these, three test cases passed\\ 
+and two test cases failed based on the observed application behaviour.\\ 
+The results helped identify areas where the application worked as expected and areas that\\ 
+may require further investigation and improvement. Overall, AI-assisted testing provided\\ 
+additional support for test scenario identification, test coverage, and risk analysis.\\ 
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 50 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 52}
+230102103008                            SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 7\\ 
+
+\smallskip
+DEFECT/BUG REPORTING\\ 
+
+\smallskip
+
+\smallskip
+7.1 Introduction\\ 
+
+\smallskip
+Defect reporting is an important part of software testing because it documents unexpected\\ 
+application behaviour identified during testing. Each defect is assigned a unique Bug ID and\\ 
+linked to its corresponding test case. A defect report includes the defect description, severity,\\ 
+priority, status, steps to reproduce, expected result, actual result, screenshot evidence, and\\ 
+tester comments.\\ 
+
+\smallskip
+
+\smallskip
+7.2 Detailed Defect Reports\\ 
+
+\smallskip
+7.2.1 BUG001: Incorrect Remaining Balance\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG001\\ 
+Test Case ID          TC-35\\ 
+Defect Description    The remaining balance displayed by the SpendWise application was\\ 
+incorrect after financial transactions were recorded.\\ 
+Severity              High\\ 
+Priority              High\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Record income and expense transactions.\\ 
+3. Open the dashboard.\\ 
+4. Compare the displayed balance with the expected balance.\\ 
+Expected Result       The remaining balance should correctly reflect the recorded income\\ 
+and expenses.\\ 
+Actual Result         The displayed remaining balance did not match the expected balance\\ 
+based on the recorded transactions.\\ 
+Tester Comments       Verify the balance calculation and confirm that the dashboard uses\\ 
+the latest transaction data.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 51 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 53}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.1: Defect Report for BUG001\\ 
+
+\smallskip
+
+\smallskip
+This defect affects the accuracy of financial information displayed on the dashboard. The\\ 
+balance calculation should be verified to ensure that recorded income and expenses are\\ 
+reflected correctly.\\ 
+
+\smallskip
+
+\smallskip
+7.2.2 BUG002: Internal Server Error While Saving a Budget\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG002\\ 
+Test Case ID          TC-33\\ 
+Defect Description    When the user entered valid budget details and clicked the Save\\ 
+button, the application displayed an internal server error instead of\\ 
+saving the budget.\\ 
+Severity              High\\ 
+Priority              High\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Navigate to the budget planning section.\\ 
+3. Enter valid budget details.\\ 
+4. Click the Save button.\\ 
+Expected Result       The budget should be saved successfully, and an appropriate\\ 
+confirmation message should be displayed.\\ 
+Actual Result         The application displayed an internal server error instead of\\ 
+completing the save operation successfully.\\ 
+Tester Comments       Investigate the server response and application logs to identify the\\ 
+cause of the error.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 52 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 54}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.2: Defect Report for BUG002\\ 
+
+\smallskip
+
+\smallskip
+This defect prevents users from saving budget details successfully. The issue requires further\\ 
+investigation to identify the cause of the server error and ensure reliable budget management.\\ 
+
+\smallskip
+
+\smallskip
+7.2.3 BUG003: Deleted Transaction Remains Visible\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG003\\ 
+Test Case ID          TC-20\\ 
+Defect Description    After the user deleted a transaction, the application displayed a\\ 
+deletion confirmation message, but the transaction still appeared in\\ 
+the transaction list.\\ 
+Severity              High\\ 
+Priority              High\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Navigate to transaction history.\\ 
+3. Select a transaction and click Delete.\\ 
+4. Observe the message and transaction list.\\ 
+Expected Result       The selected transaction should be deleted and should no longer\\ 
+appear in the transaction list after the list is refreshed.\\ 
+Actual Result         A deletion message appeared, but the transaction remained visible in\\ 
+the list.\\ 
+Tester Comments       Refresh the transaction list and verify whether the record was deleted\\ 
+or whether the list failed to update.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                               Page 53 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 55}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+1\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+2\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.3: Defect Report for BUG003\\ 
+
+\smallskip
+
+\smallskip
+This defect may cause confusion about whether a transaction has been deleted successfully.\\ 
+The deletion operation and transaction list refresh behaviour should be verified.\\ 
+
+\smallskip
+
+\smallskip
+7.2.4 BUG004: Month Filter Displays Records From Other Months\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG004\\ 
+Test Case ID          TC-38\\ 
+Defect Description    When October was selected in the month filter, the application\\ 
+displayed transactions from other months instead of showing only\\ 
+October records.\\ 
+Severity              Medium\\ 
+Priority              High\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Open transaction history or reports.\\ 
+3. Select October as the month filter.\\ 
+4. Review the displayed transaction records.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                        Page 54 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 56}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+Expected Result       Only transactions belonging to the selected month should be\\ 
+displayed.\\ 
+Actual Result         Transactions from multiple months were displayed even though\\ 
+October was selected.\\ 
+Tester Comments       Verify the month-filter logic and ensure that transaction dates are\\ 
+compared correctly.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.4: Defect Report for BUG004\\ 
+
+\smallskip
+
+\smallskip
+This defect reduces the accuracy of transaction filtering and reporting. The month filter\\ 
+should display only records belonging to the month selected by the user.\\ 
+
+\smallskip
+
+\smallskip
+7.2.5 BUG005: Shopping Expense Displayed Under Food\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG005\\ 
+Test Case ID          TC-36\\ 
+Defect Description    A shopping expense was displayed under the Food category instead of\\ 
+its intended Shopping category.\\ 
+Severity              Medium\\ 
+Priority              Medium\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Add or locate a transaction categorized as Shopping.\\ 
+3. Open transaction history or the dashboard.\\ 
+4. Check the category displayed for the transaction.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                           Page 55 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 57}
+230102103008                            SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+Expected Result       The transaction should display the Shopping category selected when\\ 
+the expense was recorded.\\ 
+Actual Result         The shopping expense was displayed under the Food category.\\ 
+Tester Comments       Verify category selection, storage, and display mapping for expense\\ 
+transactions.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+1\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+2\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.5: Defect Report for BUG005\\ 
+
+\smallskip
+
+\smallskip
+Incorrect expense categorisation can affect the organisation and interpretation of financial\\ 
+records. The selected category should be stored and displayed consistently.\\ 
+
+\smallskip
+
+\smallskip
+7.2.6 BUG006: Incorrect Search Results for Transaction Description\\ 
+
+\smallskip
+
+\smallskip
+Field                 Details\\ 
+Bug ID                BUG006\\ 
+Test Case ID          TC-37\\ 
+Defect Description    When the user searched for ”groceries shopping” in the transaction\\ 
+history, the application did not display the expected matching\\ 
+transaction.\\ 
+Severity              Medium\\ 
+Priority              Medium\\ 
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                         Page 56 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 58}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Field                 Details\\ 
+Status                Open\\ 
+Steps to Reproduce    1. Log in to SpendWise.\\ 
+2. Open transaction history.\\ 
+3. Enter “groceries shopping” in the search field.\\ 
+4. Review the search results.\\ 
+Expected Result       A matching transaction should be displayed if a record containing the\\ 
+searched description exists and satisfies the application’s search rules.\\ 
+Actual Result         No matching transaction was displayed for the search query.\\ 
+Tester Comments       Confirm that a matching record existed before classifying this as a\\ 
+confirmed defect. If confirmed, investigate search logic, text matching,\\ 
+and handling of spaces or multiple words.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Screenshot Evidence\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Table 7.6: Defect Report for BUG006\\ 
+
+\smallskip
+
+\smallskip
+This defect makes it difficult for users to locate transactions using their descriptions. The\\ 
+search functionality should be checked to ensure that matching records are returned correctly.\\ 
+
+\smallskip
+
+\smallskip
+7.2.7 Summary\\ 
+
+\smallskip
+The defect reports document the issues observed during testing of SpendWise, including\\ 
+remaining-balance calculation, budget saving, transaction deletion, month filtering, expense\\ 
+categorisation, and transaction search. Each report records the observed behaviour and\\ 
+provides supporting screenshot evidence where available. The reported issues should be\\ 
+retested after corrective changes to verify their resolution.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                            Page 57 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 59}
+230102103008                            SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 8\\ 
+
+\smallskip
+TEST RESULTS AND ANALYSIS\\ 
+
+\smallskip
+
+\smallskip
+8.1 Introduction\\ 
+
+\smallskip
+This chapter presents the results obtained from manual testing, automation testing, and\\ 
+AI-assisted testing of the SpendWise personal finance management website. The results are\\ 
+analyzed based on the total number of test cases executed and their pass or fail status.\\ 
+The analysis also helps to compare the effectiveness of the three testing approaches and\\ 
+understand how each contributed to evaluating the application’s quality. By reviewing the\\ 
+pass and fail results, we can identify successfully verified functionalities, recognize areas that\\ 
+require improvement, and determine where further testing may be necessary.\\ 
+
+\smallskip
+
+\smallskip
+8.2 Test Execution Summary\\ 
+
+\smallskip
+Testing was performed using three approaches: manual testing, automation testing, and\\ 
+AI-assisted testing. The summary of executed test cases is shown in Table 8.1.\\ 
+
+\smallskip
+Table 8.1: Summary of Test Execution\\ 
+
+\smallskip
+Testing Approach Total Test Cases Passed Failed\\ 
+Manual Testing                  39             27        12\\ 
+Automation Testing              5               2        3\\ 
+AI-Assisted Testing             5               3        2\\ 
+Total                           49             32       17\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+8.3 Test Result Calculation\\ 
+
+\smallskip
+The pass and fail percentages are calculated using the following formulas:\\ 
+
+\smallskip
+Number of Passed Test Cases\\ 
+Pass Percentage =                                × 100\\ 
+Total Test Cases\\ 
+
+\smallskip
+Number of Failed Test Cases\\ 
+Fail Percentage =                               × 100\\ 
+Total Test Cases\\ 
+Jadav Krushi Nayankumar                                                          Page 58 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 60}
+230102103008                          SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+8.4 Pass Percentage\\ 
+
+\smallskip
+The pass percentage for each testing approach is calculated below.\\ 
+
+\smallskip
+
+\smallskip
+• Manual Testing:\\ 
+27\\ 
+× 100 = 69.23\%\\ 
+39\\ 
+• Automation Testing:\\ 
+2\\ 
+× 100 = 40\%\\ 
+5\\ 
+• AI-Assisted Testing:\\ 
+3\\ 
+× 100 = 60\%\\ 
+5\\ 
+
+\smallskip
+
+\smallskip
+8.5 Failure Percentage\\ 
+
+\smallskip
+The failure percentage for each testing approach is calculated below.\\ 
+
+\smallskip
+
+\smallskip
+• Manual Testing:\\ 
+12\\ 
+× 100 = 30.77\%\\ 
+39\\ 
+• Automation Testing:\\ 
+3\\ 
+× 100 = 60\%\\ 
+5\\ 
+• AI-Assisted Testing:\\ 
+2\\ 
+× 100 = 40\%\\ 
+5\\ 
+
+\smallskip
+
+\smallskip
+8.6 Percentage Summary\\ 
+
+\smallskip
+Table 8.2 shows the pass and fail percentages for all three testing approaches.\\ 
+
+\smallskip
+Table 8.2: Pass and Fail Percentage\\ 
+
+\smallskip
+Testing Approach Pass Percentage Fail Percentage\\ 
+Manual Testing              69.23\%             30.77\%\\ 
+Automation Testing           40\%                  60\%\\ 
+AI-Assisted Testing          60\%                  40\%\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 59 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 61}
+230102103008                            SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+8.7 Comparison of Testing Approaches\\ 
+
+\smallskip
+The results show that manual testing achieved a pass percentage of 69.23\%, AI-assisted\\ 
+testing achieved 60\%, and automation testing achieved 40\%.\\ 
+Manual testing helped verify application features through direct user interaction. Automa-\\ 
+tion testing helped execute selected test scenarios using Selenium WebDriver and Python.\\ 
+AI-assisted testing helped generate and review test scenarios and identify potential risks and\\ 
+defects.\\ 
+Each approach contributed to evaluating the functionality of the SpendWise website from a\\ 
+different perspective.\\ 
+
+\smallskip
+
+\smallskip
+8.8 Overall Test Results\\ 
+
+\smallskip
+The overall result is calculated by combining the test execution counts from all three ap-\\ 
+proaches.\\ 
+
+\smallskip
+
+\smallskip
+Total Test Cases = 39 + 5 + 5 = 49\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Total Passed = 27 + 2 + 3 = 32\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Total Failed = 12 + 3 + 2 = 17\\ 
+
+\smallskip
+The overall pass percentage is:\\ 
+
+\smallskip
+32\\ 
+× 100 = 65.31\%\\ 
+49\\ 
+The overall fail percentage is:\\ 
+
+\smallskip
+17\\ 
+× 100 = 34.69\%\\ 
+49\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                       Page 60 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 62}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+Table 8.3: Overall Test Results\\ 
+
+\smallskip
+Description               Result\\ 
+Total Test Cases             49\\ 
+Passed Test Cases            32\\ 
+Failed Test Cases            17\\ 
+Overall Pass Percentage 65.31\%\\ 
+Overall Fail Percentage 34.69\%\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+8.9 Conclusion\\ 
+
+\smallskip
+The testing activities performed on the SpendWise personal finance management website\\ 
+helped evaluate its functionality, reliability, and overall behavior from a software testing\\ 
+perspective. A total of 49 test executions were carried out through manual testing, au-\\ 
+tomation testing, and AI-assisted testing. Out of these, 32 passed successfully, achieving an\\ 
+overall pass percentage of 65.31\%.\\ 
+Through these testing approaches, the major functionalities of the application were evalu-\\ 
+ated, and potential issues were identified. The testing process also helped verify important\\ 
+user operations, input validations, transaction handling, and budget-related features.\\ 
+Although some test cases failed, identifying these issues was an important part of ensuring\\ 
+software quality. The results provided useful insights into areas that could be improved and\\ 
+helped establish a clear understanding of the application’s strengths and limitations.\\ 
+Overall, this project successfully demonstrated a systematic software testing process by\\ 
+combining manual, automation, and AI-assisted testing techniques. It provided a valuable\\ 
+assessment of the SpendWise website and contributed towards delivering a more reliable,\\ 
+user-friendly, and quality-focused product from a testing perspective.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                      Page 61 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 63}
+230102103008                           SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Chapter 9\\ 
+
+\smallskip
+CONCLUSION\\ 
+
+\smallskip
+The SpendWise Software Testing and Quality Assurance project was successfully completed\\ 
+with a systematic evaluation of the application’s functionality, reliability, and overall quality.\\ 
+Through manual testing, automation testing using Selenium WebDriver and pytest, and AI-\\ 
+assisted testing, we thoroughly examined the major features of the application and evaluated\\ 
+its behavior under different test conditions.\\ 
+Our testing efforts covered important functionalities such as user authentication, income\\ 
+and expense management, budget handling, transaction operations, dashboard information,\\ 
+reports, and input validation. By designing and executing test cases, checking expected and\\ 
+actual results, and identifying unexpected behavior, we performed a structured assessment\\ 
+of the application. The use of different testing approaches helped us examine the application\\ 
+from multiple perspectives and improve the overall effectiveness of the testing process.\\ 
+Overall, this project demonstrated our ability to apply software testing concepts and tech-\\ 
+niques effectively in a practical application. The systematic testing process helped assess\\ 
+the reliability of SpendWise, verify its major functionalities, and identify potential issues\\ 
+that could affect the user experience. The successful test results provided confidence in the\\ 
+features that were verified, while the identified failures provided a foundation for further\\ 
+improvements.\\ 
+We consider this project a successful testing effort because it allowed us to evaluate the\\ 
+application systematically, apply different testing methodologies, and contribute towards\\ 
+improving its quality. Through our combined testing activities, we gained valuable practical\\ 
+experience and demonstrated how effective Software Testing and Quality Assurance practices\\ 
+help build a more reliable, consistent, and user-friendly software product.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                          Page 62 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 64}
+230102103008                        SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+REFERENCES\\ 
+
+\smallskip
+[1] Selenium Project, “Selenium Documentation,” [Online].\\ 
+Available: https://www.selenium.dev/documentation/\\ 
+
+\smallskip
+[2] Python Software Foundation, “Python 3 Documentation,” [Online].\\ 
+Available: https://docs.python.org/3/\\ 
+
+\smallskip
+[3] pytest Development Team, “pytest Documentation,” [Online].\\ 
+Available: https://docs.pytest.org/en/stable/\\ 
+
+\smallskip
+[4] International Software Testing Qualifications Board (ISTQB), “Certified Tester Foun-\\ 
+dation Level Syllabus,” [Online].\\ 
+Available: https://www.istqb.org/\\ 
+
+\smallskip
+[5] G. J. Myers, C. Sandler, and T. Badgett, The Art of Software Testing, 3rd ed. Hoboken,\\ 
+NJ, USA: John Wiley \& Sons, 2011.\\ 
+
+\smallskip
+[6] Google, “Google Gemini,” [Online].\\ 
+Available: https://gemini.google.com/\\ 
+
+\smallskip
+[7] Anthropic, “Claude AI,” [Online].\\ 
+Available: https://claude.ai/\\ 
+
+\smallskip
+[8] Google, “NotebookLM,” [Online].\\ 
+Available: https://notebooklm.google.com/\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                   Page 63 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 65}
+230102103008                   SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+ABBREVIATIONS\\ 
+
+\smallskip
+
+\smallskip
+Abbreviation       Full Form\\ 
+
+\smallskip
+AI                 Artificial Intelligence\\ 
+API                Application Programming Interface\\ 
+BVA                Boundary Value Analysis\\ 
+CSS                Cascading Style Sheets\\ 
+DOM                Document Object Model\\ 
+EP                 Equivalence Partitioning\\ 
+GUI                Graphical User Interface\\ 
+HTML               HyperText Markup Language\\ 
+HTTP               HyperText Transfer Protocol\\ 
+IDE                Integrated Development Environment\\ 
+ISTQB              International Software Testing Qualifications Board\\ 
+QA                 Quality Assurance\\ 
+SQL                Structured Query Language\\ 
+STQA               Software Testing and Quality Assurance\\ 
+TC                 Test Case\\ 
+UI                 User Interface\\ 
+URL                Uniform Resource Locator\\ 
+UX                 User Experience\\ 
+WebDriver          Selenium WebDriver\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                              Page 64 of 65\\ 
+
+\clearpage
+\section*{Extracted Source Page 66}
+230102103008                         SpendWise – Smart Expense Tracking and Budget\\ 
+Management Testing\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+APPENDIX\\ 
+
+\smallskip
+
+\smallskip
+Photographic Evidence of Project Work\\ 
+
+\smallskip
+The photograph below provides evidence of the practical work carried out during the Software\\ 
+Testing.\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+my\_testing\_photo.jpg\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Figure A.1: Working on the Software Testing Mini Project\\ 
+
+\smallskip
+
+\smallskip
+
+\smallskip
+
+\smallskip
+Jadav Krushi Nayankumar                                                     Page 65 of 65\\ 
+
+\clearpage
+\end{document}
