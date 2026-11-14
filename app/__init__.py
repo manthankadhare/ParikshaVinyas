@@ -18,8 +18,12 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     # Ensure required directories exist
-    os.makedirs(os.path.join(app.root_path, '..', 'instance'), exist_ok=True)
-    os.makedirs(app.config.get('UPLOAD_FOLDER', 'uploads'), exist_ok=True)
+    try:
+        if not os.environ.get('VERCEL'):
+            os.makedirs(os.path.join(app.root_path, '..', 'instance'), exist_ok=True)
+        os.makedirs(app.config.get('UPLOAD_FOLDER', 'uploads'), exist_ok=True)
+    except OSError:
+        pass
 
     # Initialize extensions
     db.init_app(app)
@@ -85,6 +89,18 @@ def create_app(config_class=Config):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
         return response
+
+    # Auto-seed database when running in Vercel serverless environment
+    if os.environ.get('VERCEL'):
+        try:
+            with app.app_context():
+                db.create_all()
+                from app.models.user import User
+                if User.query.count() == 0:
+                    from scripts.seed_database import seed
+                    seed(app=app)
+        except Exception as e:
+            app.logger.warning(f"Vercel auto-seed: {e}")
 
     return app
 
